@@ -14,7 +14,7 @@ export const Container = styled.div`
 export const Menu = styled.header`
   display: flex;
   align-content: center;
-  `;
+`;
 
 export const Button = styled.button`
   border-style: none;
