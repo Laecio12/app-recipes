@@ -1,10 +1,12 @@
 import React from 'react';
 import { Container } from './styles';
+import Header from '../../components/Header/index';
 
 const Food = () => (
-  <Container>
+  <>
+    <Header />
     <h1> Food </h1>
-  </Container>
+  </>
 );
 
 export default Food;
