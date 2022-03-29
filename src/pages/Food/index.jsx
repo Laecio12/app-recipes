@@ -1,16 +1,10 @@
 import React from 'react';
 import { Container } from './styles';
-import Header from '../../components/Header/index';
-import SearchFilters from '../../components/SearchFilters/index';
-import 
 
 const Food = () => (
-  <>
-    <Header />
-    <SearchFilters />
+  <Container>
     <h1> Food </h1>
-    <Footer />
-  </>
+  </Container>
 );
 
 export default Food;
