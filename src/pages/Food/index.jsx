@@ -8,6 +8,7 @@ const Food = () => (
   <>
     <Header />
     <SearchFilters />
+
     <Footer />
   </>
 );
