@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+// import { apiFood } from '../../services/api';
 // import { Container } from './styles';
-import Header from '../../components/Header/index';
-import Footer from '../../components/Footer/index';
+// import Header from '../../components/Header/index';
+// import Footer from '../../components/Footer/index';
 import SearchFilters from '../../components/SearchFilters/index';
 
 const Food = () => (
-  const categoriesList = [];
   <>
     {/* realiza renderização condicional do Header apenas se clicar no search */}
-    <Header />
+    {/* <Header /> */}
     <SearchFilters />
-    categoriesList.map((recipeCard) =>  )
-    <Footer />
+    <p>Food</p>
+    {/* categoriesList.map((recipeCard) =>  ) */}
+    {/* <Footer /> */}
   </>
 );
 
