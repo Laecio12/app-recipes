@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { getDrinkDetails, getFoodsRecommendations } from '../../services/api';
 import CardRecommendation from '../../components/CardRecommendation';
 import shareIcon from '../../images/shareIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 import {
   Container,
@@ -14,6 +16,12 @@ import {
   Cards,
 } from './styles';
 import copyToClipboard from '../../utils/copyLink';
+import getIngredients from '../../utils/getIngredients';
+import {
+  deleteFavoriteRecipe,
+  getStorageData,
+  setFavoriteRecipes,
+} from '../../services/localStorage';
 
 const DrinkDetails = ({ match }) => {
   const [drink, setDrink] = useState({});
@@ -22,6 +30,7 @@ const DrinkDetails = ({ match }) => {
   const [doneRecipe, setDoneRecipe] = useState(false);
   const [inProgressRecipe, setInProgressRecipe] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [favoriteIcon, setFavoriteIcon] = useState(whiteHeartIcon);
   const { params } = match;
   const { id } = params;
 
@@ -29,35 +38,20 @@ const DrinkDetails = ({ match }) => {
 
   useEffect(() => {
     async function getDrink() {
-      const dinkData = await getDrinkDetails(id);
+      const drinkData = await getDrinkDetails(id);
       const recommendationsData = await getFoodsRecommendations();
-      setDrink(dinkData);
+      setDrink(drinkData);
+      getIngredients(drinkData, setIngredients);
       setRecommendations(recommendationsData);
     }
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    const findRecipe = doneRecipes.some((recipe) => recipe.id === id);
+    const getDataInLocalStorage = getStorageData(id);
 
-    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
+    setInProgressRecipe(getDataInLocalStorage.inProgress);
+    setDoneRecipe(getDataInLocalStorage.doneRecipe);
+    setFavoriteIcon(getDataInLocalStorage.favoriteIcon);
 
-    if (inProgressRecipes) setInProgressRecipe(true);
-
-    setDoneRecipe(findRecipe);
     getDrink();
   }, [id]);
-
-  useEffect(() => {
-    const getIngredients = () => {
-      const ingredientsData = [];
-      Object.keys(drink).forEach((key) => {
-        if (key.includes('strIngredient')
-      && String(drink[key]).length > 0 && drink[key] !== null) {
-          ingredientsData.push(drink[key]);
-        }
-      });
-      setIngredients(ingredientsData);
-    };
-    getIngredients();
-  }, [drink]);
 
   const copyLink = () => {
     copyToClipboard(`http://localhost:3000${history.location.pathname}`);
@@ -66,6 +60,27 @@ const DrinkDetails = ({ match }) => {
       setIsCopied(false);
     }, +'2000');
   };
+
+  const handleFavorite = () => {
+    if (favoriteIcon === whiteHeartIcon) {
+      setFavoriteIcon(blackHeartIcon);
+      setFavoriteRecipes(
+        {
+          id: drink.idDrink,
+          type: 'drink',
+          nationality: '',
+          category: drink.strCategory,
+          alcoholicOrNot: drink.strAlcoholic,
+          name: drink.strDrink,
+          image: drink.strDrinkThumb,
+        },
+      );
+    } else {
+      setFavoriteIcon(whiteHeartIcon);
+      deleteFavoriteRecipe(drink.idDrink);
+    }
+  };
+
   return (
     <Container>
       <Content>
@@ -85,7 +100,11 @@ const DrinkDetails = ({ match }) => {
         >
           {isCopied ? 'Link copied!' : <img src={ shareIcon } alt="Share" />}
         </ShareBtn>
-        <FavoriteBtn data-testid="favorite-btn">Favorite</FavoriteBtn>
+        <FavoriteBtn
+          onClick={ handleFavorite }
+        >
+          <img data-testid="favorite-btn" src={ favoriteIcon } alt="Favorite" />
+        </FavoriteBtn>
         <p data-testid="recipe-category">{drink.strAlcoholic}</p>
         {
           ingredients.map((ingredient, index) => (

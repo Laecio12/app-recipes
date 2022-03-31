@@ -9,8 +9,18 @@ export const Content = styled.div`
   }
 `;
 
-export const ShareBtn = styled.button``;
-export const FavoriteBtn = styled.button``;
+export const ShareBtn = styled.button`
+  img {
+    width: 20px;
+    height: 20px;
+  }
+`;
+export const FavoriteBtn = styled.button`
+  img {
+    width: 20px;
+    height: 20px;
+  }
+`;
 
 export const StartRecipeBtn = styled.button`
   position: fixed;

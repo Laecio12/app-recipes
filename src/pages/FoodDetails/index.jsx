@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 import { getDrinksRecommendations, getFoodDetails } from '../../services/api';
 import CardRecommendation from '../../components/CardRecommendation';
 import shareIcon from '../../images/shareIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 import {
   Cards,
@@ -15,6 +17,12 @@ import {
   StartRecipeBtn,
 } from './styles';
 import copyToClipboard from '../../utils/copyLink';
+import {
+  deleteFavoriteRecipe,
+  getStorageData,
+  setFavoriteRecipes,
+} from '../../services/localStorage';
+import getIngredients from '../../utils/getIngredients';
 
 const FoodDetails = ({ match }) => {
   const [food, setFood] = useState({});
@@ -23,6 +31,7 @@ const FoodDetails = ({ match }) => {
   const [inProgressRecipe, setInProgressRecipe] = React.useState(false);
   const [doneRecipe, setDoneRecipe] = React.useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [favoriteIcon, setFavoriteIcon] = useState(whiteHeartIcon);
 
   const { params } = match;
   const { id } = params;
@@ -35,32 +44,17 @@ const FoodDetails = ({ match }) => {
       const recommendationsData = await getDrinksRecommendations();
 
       setFood(meal);
+      getIngredients(meal, setIngredients);
       setRecommendations(recommendationsData);
     }
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    const findRecipe = doneRecipes.some((recipe) => recipe.id === id);
+    const getDataInLocalStorage = getStorageData(id);
 
-    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
+    setInProgressRecipe(getDataInLocalStorage.inProgress);
+    setDoneRecipe(getDataInLocalStorage.doneRecipe);
+    setFavoriteIcon(getDataInLocalStorage.favoriteIcon);
 
-    if (inProgressRecipes) setInProgressRecipe(true);
-
-    setDoneRecipe(findRecipe);
     getFood();
   }, [id]);
-
-  useEffect(() => {
-    const getIngredients = () => {
-      const ingredientsData = [];
-      Object.keys(food).forEach((key) => {
-        if (key.includes('strIngredient')
-      && String(food[key]).length > 0 && food[key] !== null) {
-          ingredientsData.push(food[key]);
-        }
-      });
-      setIngredients(ingredientsData);
-    };
-    getIngredients();
-  }, [food]);
 
   const copyLink = () => {
     copyToClipboard(`http://localhost:3000${history.location.pathname}`);
@@ -68,6 +62,26 @@ const FoodDetails = ({ match }) => {
     setTimeout(() => {
       setIsCopied(false);
     }, +'2000');
+  };
+
+  const handleFavorite = () => {
+    if (favoriteIcon === whiteHeartIcon) {
+      setFavoriteIcon(blackHeartIcon);
+      setFavoriteRecipes(
+        {
+          id: food.idMeal,
+          type: 'food',
+          nationality: food.strArea,
+          category: food.strCategory,
+          alcoholicOrNot: '',
+          name: food.strMeal,
+          image: food.strMealThumb,
+        },
+      );
+    } else {
+      setFavoriteIcon(whiteHeartIcon);
+      deleteFavoriteRecipe(food.idMeal);
+    }
   };
 
   return (
@@ -87,7 +101,11 @@ const FoodDetails = ({ match }) => {
         >
           {isCopied ? 'Link copied!' : <img src={ shareIcon } alt="Share" />}
         </ShareBtn>
-        <FavoriteBtn data-testid="favorite-btn">Favorite</FavoriteBtn>
+        <FavoriteBtn
+          onClick={ handleFavorite }
+        >
+          <img data-testid="favorite-btn" src={ favoriteIcon } alt="Favorite" />
+        </FavoriteBtn>
         <p data-testid="recipe-category">{food.strCategory}</p>
         {
           ingredients.map((ingredient, index) => (
@@ -122,7 +140,6 @@ const FoodDetails = ({ match }) => {
         {
           !doneRecipe && (
             <StartRecipeBtn
-              isDone={ doneRecipe }
               data-testid="start-recipe-btn"
               onClick={ () => history.push(`/foods/${id}/in-progress`) }
             >
