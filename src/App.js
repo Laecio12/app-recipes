@@ -1,16 +1,17 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import CardDetails from './pages/CardDetails';
+import DrinkDetails from './pages/DrinkDetails ';
+import FoodDetails from './pages/FoodDetails';
 import Login from './pages/Login';
 
 function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route path="/foods/:id" render={ (params) => <CardDetails { ...params } /> } />
+      <Route path="/foods/:id" render={ (params) => <FoodDetails { ...params } /> } />
+      <Route path="/drinks/:id" render={ (params) => <DrinkDetails { ...params } /> } />
       {/* <Route path="/foods" component={ Food } />
       <Route path="/drinks" component={ Drink } />
-      <Route path="/drinks/:id" render={ (params) => <Drink { ...params } /> } />
       <Route path="/foods/:id/in-progress" render={ (params) => <Food { ...params } /> } />
       <Route path="/drinks/:id/in-progress" render={ (params) => <Drink { ...params } /> } />
       <Route path="/explore" component={ Explore } />
