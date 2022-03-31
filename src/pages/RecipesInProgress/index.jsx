@@ -2,17 +2,20 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { useFetch, getUrlRecipe } from '../../services/api';
-import { Recipe, Button, Checkbox } from './styles';
-import Share from '../../components/Share';
-import Favorite from '../../components/Favorite';
-// import { setInProgressRecipes, getInProgressRecipes } from '../../services/localStorage';
+import { Recipe, Button } from './styles';
+// import Share from '../../components/Share';
+// import Favorite from '../../components/Favorite';
+import { setInProgressRecipes, getInProgressRecipes } from '../../services/localStorage';
 import getIngredients from '../../utils/helpers';
+import shareIcon from '../../images/shareIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 const RecipesInProgress = ({ match: { url, params: { id } } }) => {
   const [recipe, setRecipe] = useState();
   const [isDisabled, setIsDisabled] = useState(true);
   const [ingredients, setIngredients] = useState();
-  const [checks, setChecks] = useState(0);
+  const [checks, setChecks] = useState([]);
+  const [type, setType] = useState('');
 
   const history = useHistory();
 
@@ -22,24 +25,30 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
     if (data && url.includes('foods')) {
       setRecipe(data.meals);
       setIngredients(getIngredients(data.meals[0]));
+      setType('meals');
     }
     if (data && url.includes('drinks')) {
       setRecipe(data.drinks);
       setIngredients(getIngredients(data.drinks[0]));
+      setType('cocktails');
     }
-  }, [data, url, recipe]);
+    getInProgressRecipes();
+  }, [data, url]);
 
   useEffect(() => {
-    if (ingredients) setIsDisabled(ingredients.length !== checks);
+    if (ingredients) setIsDisabled(ingredients.length !== checks.length);
   }, [checks, ingredients]);
 
-  const setInLocal = ({ target }) => {
+  const setDecoration = ({ target }, ingredient) => {
     target.parentNode.style
       .textDecoration = target.checked ? 'line-through' : '';
-    const ONE = 1;
-    setChecks((prev) => (
-      target.checked ? prev + ONE : prev - ONE
-    ));
+
+    setChecks((prev) => (target.checked
+      ? ([...prev, ingredient])
+      : prev.filter((ings) => ings !== ingredient)));
+
+    const ingredientsRecipe = { [id]: [...checks, ingredient] };
+    setInProgressRecipes(ingredientsRecipe, type);
   };
 
   return (
@@ -55,30 +64,29 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
               data-testid="recipe-photo"
             />
             <h1 data-testid="recipe-title">{ item.strMeal || item.strDrink }</h1>
-            <Share />
-            <Favorite />
+            <img src={ shareIcon } alt="share" data-testid="share-btn" />
+            <img src={ whiteHeartIcon } alt="love" data-testid="favorite-btn" />
             <p data-testid="recipe-category">
               { item.strCategory || item.strAlcoholic }
             </p>
             <h2>Ingredientes</h2>
             { ingredients.map((ing, index) => (
-              <label
+              <div
                 htmlFor="ing"
+                data-testid="ingredient-step"
                 key={ index }
               >
-                <Checkbox
+                <input
                   type="checkbox"
                   id="ing"
-                  onChange={ setInLocal }
-                  data-testid={ `${index}-ingredient-step` }
+                  onChange={ (e) => setDecoration(e, ing) }
+                  checked={ checks.some((ingredient) => ing === ingredient) }
                 />
                 {`${ing} - ${recipe[0][`strMeasure${index + 1}`]}`}
-              </label>
+              </div>
             ))}
             <h2>Instruções</h2>
-            <p
-              data-testid={ `${i}-ingredient-step` }
-            >
+            <p data-testid="instructions">
               { item.strInstructions }
 
             </p>
