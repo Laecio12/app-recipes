@@ -32,8 +32,13 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
       setIngredients(getIngredients(data.drinks[0]));
       setType('cocktails');
     }
-    getInProgressRecipes();
   }, [data, url]);
+
+  useEffect(() => {
+    if (type) {
+      setChecks(getInProgressRecipes()[type][id]);
+    }
+  }, [type, id]);
 
   useEffect(() => {
     if (ingredients) setIsDisabled(ingredients.length !== checks.length);
