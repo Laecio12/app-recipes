@@ -1,10 +1,8 @@
 import React from 'react';
 import Footer from '../../components/Footer';
 
-const ExploreNationalities = () => {
-  return (
-    <Footer />
-  );
-}
+const ExploreNationalities = () => (
+  <Footer />
+);
 
 export default ExploreNationalities;

@@ -1,10 +1,8 @@
 import React from 'react';
 import Footer from '../../components/Footer';
 
-const ExploreFood = () => {
-  return (
-    <Footer />
-  );
-}
+const ExploreFood = () => (
+  <Footer />
+);
 
 export default ExploreFood;

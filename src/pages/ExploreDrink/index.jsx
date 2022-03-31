@@ -1,10 +1,8 @@
 import React from 'react';
 import Footer from '../../components/Footer';
 
-const ExploreDrink = () => {
-  return (
-    <Footer />
-  );
-}
+const ExploreDrink = () => (
+  <Footer />
+);
 
 export default ExploreDrink;
