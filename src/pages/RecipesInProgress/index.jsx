@@ -4,11 +4,12 @@ import { useHistory } from 'react-router-dom';
 import { useFetch, getUrlRecipe } from '../../services/api';
 import { Recipe, Button } from './styles';
 // import Share from '../../components/Share';
-// import Favorite from '../../components/Favorite';
+import Favorite from '../../components/Favorite';
 import { setInProgressRecipes, getInProgressRecipes } from '../../services/localStorage';
 import getIngredients from '../../utils/helpers';
 import shareIcon from '../../images/shareIcon.svg';
-import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+// import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+// import useFavorite from '../../hooks/useFavorite';
 
 const RecipesInProgress = ({ match: { url, params: { id } } }) => {
   const [recipe, setRecipe] = useState();
@@ -16,6 +17,7 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
   const [ingredients, setIngredients] = useState();
   const [checks, setChecks] = useState([]);
   const [type, setType] = useState('');
+  const [favorite, setFavorite] = useState({});
 
   const history = useHistory();
 
@@ -34,26 +36,57 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
     }
   }, [data, url]);
 
+  // const { favorite2 } = useFavorite(data);
+
   useEffect(() => {
     if (type) {
-      setChecks(getInProgressRecipes()[type][id]);
+      const ingredientsChecks = getInProgressRecipes()[type][id];
+      if (ingredientsChecks) setChecks(ingredientsChecks);
     }
   }, [type, id]);
 
   useEffect(() => {
-    if (ingredients) setIsDisabled(ingredients.length !== checks.length);
+    if (ingredients && checks) setIsDisabled(ingredients.length !== checks.length);
   }, [checks, ingredients]);
 
-  const setDecoration = ({ target }, ingredient) => {
+  useEffect(() => {
+    if (recipe) {
+      setFavorite({ id,
+        type,
+        nationality: '',
+        category: recipe[0].strCategory,
+        alcoholicOrNot: '' || recipe[0].strAlcoholic,
+        name: recipe[0].strMeal || recipe[0].strDrink,
+        image: recipe[0].strMealThumb || recipe[0].strDrinkThumb,
+
+      });
+    }
+  }, [recipe, id, type]);
+
+  const setDecoration = (target, ingredient) => {
     target.parentNode.style
       .textDecoration = target.checked ? 'line-through' : '';
 
-    setChecks((prev) => (target.checked
-      ? ([...prev, ingredient])
-      : prev.filter((ings) => ings !== ingredient)));
+    target.setAttribute('checked', target.checked);
+
+    if (target.checked) {
+      console.log('if');
+      setChecks([...checks, ingredient]);
+      // target.setAttribute('checked');
+    } else {
+      setChecks(checks.filter((ings) => ings !== ingredient));
+    }
 
     const ingredientsRecipe = { [id]: [...checks, ingredient] };
     setInProgressRecipes(ingredientsRecipe, type);
+  };
+
+  const isChecked = (ing) => {
+    if (checks.some((ingredient) => ing === ingredient)) {
+      // target.parentNode.style.textDecoration = 'line-through';
+      return 'checked';
+    }
+    return null;
   };
 
   return (
@@ -70,25 +103,27 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
             />
             <h1 data-testid="recipe-title">{ item.strMeal || item.strDrink }</h1>
             <img src={ shareIcon } alt="share" data-testid="share-btn" />
-            <img src={ whiteHeartIcon } alt="love" data-testid="favorite-btn" />
+            <Favorite { ...favorite } />
+            {/* <img src={ whiteHeartIcon } alt="love" data-testid="favorite-btn" /> */}
             <p data-testid="recipe-category">
               { item.strCategory || item.strAlcoholic }
             </p>
             <h2>Ingredientes</h2>
             { ingredients.map((ing, index) => (
-              <div
+              <label
                 htmlFor="ing"
-                data-testid="ingredient-step"
                 key={ index }
+                data-testid={ `${index}-ingredient-step` }
               >
                 <input
+                  // data-testid="ingredient-step"
                   type="checkbox"
                   id="ing"
-                  onChange={ (e) => setDecoration(e, ing) }
-                  checked={ checks.some((ingredient) => ing === ingredient) }
+                  onChange={ ({ target }) => setDecoration(target, ing) }
+                  checked={ isChecked(ing) }
                 />
                 {`${ing} - ${recipe[0][`strMeasure${index + 1}`]}`}
-              </div>
+              </label>
             ))}
             <h2>Instruções</h2>
             <p data-testid="instructions">
