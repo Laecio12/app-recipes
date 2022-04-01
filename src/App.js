@@ -33,11 +33,6 @@ function App() {
       <Route path="/explore" component={ Explore } />
       {/* <Route path="/foods" component={ Food } />
       <Route path="/drinks" component={ Drink } />
-      <Route path="/foods/:id/in-progress" render={ (params) => <Food { ...params } /> } />
-      <Route path="/drinks/:id/in-progress" render={ (params) => <Drink { ...params } /> } />
-
-      <Route path="/drinks" component={ Drink } />
-      {/*
       <Route path="/explore/foods/ingredients" component={ ExploreIngredients } />
       <Route path="/explore/drink/ingredients" component={ ExploreIngredients } />
       <Route path="explore/foods/nationalities" component={ ExploreNationalities } />
