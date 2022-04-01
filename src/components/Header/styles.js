@@ -20,3 +20,7 @@ export const Button = styled.button`
   border-style: none;
   margin: auto 50px;
 `;
+
+export const Search = styled.button`
+
+`;
