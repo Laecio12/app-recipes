@@ -9,7 +9,6 @@ import {
 } from '../../services/localStorage';
 
 function Favorite(props) {
-  console.log(props);
   const { id,
     type,
     nationality,
@@ -20,13 +19,10 @@ function Favorite(props) {
   const [favoriteIcon, setFavoriteIcon] = useState(whiteHeartIcon);
 
   useEffect(() => {
-    let recipeFind = {};
-    if (localStorage.getItem('favoriteRecipes')) {
-      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-      recipeFind = favoriteRecipes.find((recipe) => recipe.id === id);
-    }
-    if (recipeFind) setFavoriteIcon(blackHeartIcon);
-    else setFavoriteIcon(whiteHeartIcon);
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const findFavorite = favoriteRecipes.some((recipe) => recipe.id === id);
+    const favorite = findFavorite ? blackHeartIcon : whiteHeartIcon;
+    setFavoriteIcon(favorite);
   }, [id]);
 
   const handleFavorite = () => {
@@ -35,7 +31,7 @@ function Favorite(props) {
       setFavoriteRecipes(
         {
           id,
-          type,
+          type: type === 'meals' ? 'food' : 'drink',
           nationality,
           category,
           alcoholicOrNot,

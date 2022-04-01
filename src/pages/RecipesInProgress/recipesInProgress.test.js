@@ -1,8 +1,8 @@
 import React from 'react';
-import userEvent from '@testing-library/user-event';
+// import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import renderWithRouter from '../../utils/renderWithRouter';
-import RecipesInProgress from '.';
+// import RecipesInProgress from '.';
 import App from '../../App';
 
 const EIGTH = 8;
@@ -11,9 +11,9 @@ const URL_DRINK = '/drinks/11007/in-progress';
 const URL_MEAL = '/foods/52772/in-progress';
 
 describe('Renderiza os elementos na tela ao acessar', () => {
-    const { history } = renderWithRouter(<App />);
-    test('Ao clicar numa comida renderiza imagem, título e categoria', () => {
-        history.push(URL_MEAL);
+  const { history } = renderWithRouter(<App />);
+  test('Ao clicar numa comida renderiza imagem, título e categoria', () => {
+    history.push(URL_MEAL);
     const imgFood = screen.findByTestId('recipe-photo');
     const headerTitle = screen.findByRole('heading', { name: /Teriyaki Chicken/i });
     const category = screen.findByText(/Chicken/i);
@@ -63,7 +63,8 @@ describe('Lista de ingredientes', () => {
 });
 
 describe('LocalStorage', () => {
-  test('O progresso da receita é salvo no LocalStorage na chave inProgressRecipes', () => {});
+  test('O progresso da receita é salvo no LocalStorage na chave inProgressRecipes',
+    () => {});
 });
 
 describe('Favoritar e compartilhar', () => {

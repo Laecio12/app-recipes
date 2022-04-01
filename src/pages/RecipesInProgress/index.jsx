@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { useFetch, getUrlRecipe } from '../../services/api';
 import { Recipe, Button } from './styles';
-// import Share from '../../components/Share';
+import Share from '../../components/Share';
 import Favorite from '../../components/Favorite';
 import { setInProgressRecipes, getInProgressRecipes } from '../../services/localStorage';
 import getIngredients from '../../utils/helpers';
-import shareIcon from '../../images/shareIcon.svg';
-// import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 // import useFavorite from '../../hooks/useFavorite';
 
 const RecipesInProgress = ({ match: { url, params: { id } } }) => {
@@ -53,9 +51,9 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
     if (recipe) {
       setFavorite({ id,
         type,
-        nationality: '',
+        nationality: recipe[0].strArea || '',
         category: recipe[0].strCategory,
-        alcoholicOrNot: '' || recipe[0].strAlcoholic,
+        alcoholicOrNot: recipe[0].strAlcoholic || '',
         name: recipe[0].strMeal || recipe[0].strDrink,
         image: recipe[0].strMealThumb || recipe[0].strDrinkThumb,
 
@@ -67,27 +65,27 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
     target.parentNode.style
       .textDecoration = target.checked ? 'line-through' : '';
 
-    target.setAttribute('checked', target.checked);
-
     if (target.checked) {
-      console.log('if');
       setChecks([...checks, ingredient]);
-      // target.setAttribute('checked');
+      target.setAttribute('checked', '');
     } else {
       setChecks(checks.filter((ings) => ings !== ingredient));
+      target.removeAttribute('checked');
     }
 
     const ingredientsRecipe = { [id]: [...checks, ingredient] };
     setInProgressRecipes(ingredientsRecipe, type);
   };
 
-  const isChecked = (ing) => {
-    if (checks.some((ingredient) => ing === ingredient)) {
-      // target.parentNode.style.textDecoration = 'line-through';
-      return 'checked';
-    }
-    return null;
-  };
+  /* const isChecked = (ing) => {
+    return checks.some((ingredient) => ing === ingredient);
+  }; */
+  /* if (checks.some((ingredient) => ing === ingredient)) {
+      target.parentNode.style.textDecoration = 'line-through';
+      target.setAttribute('checked', '');
+    } else {
+      target.removeAttribute('checked');
+    } */
 
   return (
     <Recipe>
@@ -102,29 +100,60 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
               data-testid="recipe-photo"
             />
             <h1 data-testid="recipe-title">{ item.strMeal || item.strDrink }</h1>
-            <img src={ shareIcon } alt="share" data-testid="share-btn" />
+            <Share id={ id } type={ type } />
             <Favorite { ...favorite } />
-            {/* <img src={ whiteHeartIcon } alt="love" data-testid="favorite-btn" /> */}
             <p data-testid="recipe-category">
               { item.strCategory || item.strAlcoholic }
             </p>
             <h2>Ingredientes</h2>
             { ingredients.map((ing, index) => (
-              <label
+              checks.some((ingredient) => ing === ingredient)
+                ? (
+                  <div
+                    htmlFor="ing"
+                    key={ index }
+                    data-testid={ `${index}-ingredient-step` }
+                    style={ { textDecoration: 'line-through' } }
+                  >
+                    <input
+                      type="checkbox"
+                      id="ing"
+                      onChange={ ({ target }) => setDecoration(target, ing) }
+                      defaultChecked
+                    />
+                    {`${ing} - ${recipe[0][`strMeasure${index + 1}`]}`}
+                  </div>
+                )
+                : (
+                  <div
+                    htmlFor="ing"
+                    key={ index }
+                    data-testid={ `${index}-ingredient-step` }
+                  >
+                    <input
+                      type="checkbox"
+                      id="ing"
+                      onChange={ ({ target }) => setDecoration(target, ing) }
+                    />
+                    {`${ing} - ${recipe[0][`strMeasure${index + 1}`]}`}
+                  </div>
+                )
+            ))}
+            {/* { ingredients.map((ing, index) => (
+              <div
                 htmlFor="ing"
                 key={ index }
                 data-testid={ `${index}-ingredient-step` }
               >
                 <input
-                  // data-testid="ingredient-step"
                   type="checkbox"
                   id="ing"
                   onChange={ ({ target }) => setDecoration(target, ing) }
                   checked={ isChecked(ing) }
                 />
                 {`${ing} - ${recipe[0][`strMeasure${index + 1}`]}`}
-              </label>
-            ))}
+              </div>
+            ))} */}
             <h2>Instruções</h2>
             <p data-testid="instructions">
               { item.strInstructions }
@@ -157,3 +186,4 @@ RecipesInProgress.propTypes = {
 export default RecipesInProgress;
 
 // riscar elemento: https://pt.stackoverflow.com/questions/423159/ao-selecionar-o-chekbox-preciso-que-a-frase-fique-tachada-segue-img-exemplo
+// Setar atributos vazios: https://developer.mozilla.org/pt-BR/docs/Web/API/Element/setAttribute
