@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-const ShareBtn = styled.button`
+const FavoriteBtn = styled.button`
   img {
     width: 20px;
     height: 20px;
   }
 `;
 
-export default ShareBtn;
+export default FavoriteBtn;
