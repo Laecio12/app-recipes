@@ -1316,7 +1316,7 @@ Verifica se os atributos data-testid estão presentes na tela com suas respectiv
   * O botão de favoritar deve possuir o atributo `data-testid="favorite-btn"`;
   * O texto da categoria deve possuir o atributo `data-testid="recipe-category"`;
   * Os ingredientes devem possuir o atributo `data-testid=${index}-ingredient-step`, a verificação será feita pelo length do atributo.
-  * O elemento de instruções deve possuir o atributo `data-testid="instructions"`;
+  * O elemento de instruções deve possuir o atributo `data-testid=${index}-ingredient-step`;
   * O botão para finalizar a receita deve possuir o atributo `data-testid="finish-recipe-btn"`.
 
   O que será verificado:
