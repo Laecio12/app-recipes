@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DoneRecipesCard from '../../components/DoneRecipesCard';
+import HeaderWithoutSearch from '../../components/HeaderWithoutSearch';
 import { Container, FilterButtons } from './styles';
 
 const RecipesDoneOrFavorite = () => {
@@ -22,6 +23,7 @@ const RecipesDoneOrFavorite = () => {
 
   return (
     <Container>
+      <HeaderWithoutSearch value="Favorite Recipes" />
       <FilterButtons>
         <button
           onClick={ () => setDoneRecipes(doneRecipesData) }

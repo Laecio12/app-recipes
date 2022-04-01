@@ -4,7 +4,7 @@ import Footer from '../../components/Footer';
 
 const ExploreNationalities = () => (
   <>
-    <Header value="Explore Nacionalities" />
+    <Header value="Explore Nationalities" />
     <Footer />
   </>
 );

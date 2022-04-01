@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '../../components/Header';
+import HeaderWithoutSearch from '../../components/HeaderWithoutSearch';
 import Footer from '../../components/Footer';
 
 const Profile = () => (
   <>
-    <Header value="Profile" />
+    <HeaderWithoutSearch value="Profile" />
     <h2>Profile</h2>
     <Footer />
   </>
