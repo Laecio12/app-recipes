@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import DrinkDetails from './pages/DrinkDetails ';
 import FoodDetails from './pages/FoodDetails';
 import Login from './pages/Login';
+import RecipesDoneOrFavorite from './pages/RecipesDoneOrFavorite';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Route exact path="/" component={ Login } />
       <Route path="/foods/:id" render={ (params) => <FoodDetails { ...params } /> } />
       <Route path="/drinks/:id" render={ (params) => <DrinkDetails { ...params } /> } />
+      <Route path="/done-recipes" component={ RecipesDoneOrFavorite } />
       {/* <Route path="/foods" component={ Food } />
       <Route path="/drinks" component={ Drink } />
       <Route path="/foods/:id/in-progress" render={ (params) => <Food { ...params } /> } />
@@ -21,7 +23,6 @@ function App() {
       <Route path="/explore/drink/ingredients" component={ ExploreIngredients } />
       <Route path="explore/foods/nationalities" component={ ExploreNationalities } />
       <Route path="/profile" component={ Profile } />
-      <Route path="/done-recipes" component={ RecipesDone } />
       <Route path="/favorite-recipes" component={ RecipesDone } /> */}
     </Switch>
 
