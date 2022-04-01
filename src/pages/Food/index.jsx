@@ -50,7 +50,12 @@ const Food = () => {
         const CARDS_QTT = 11;
         if (index > CARDS_QTT) return null;
         console.log('meals', meals);
-        return <FoodCards  data-testid=`${index}-recipe-card` { ...meal } index={ index } key={ meal.idMeal } />;
+        return (<FoodCards
+          data-testid={ `${index}-recipe-card` }
+          { ...meal }
+          index={ index }
+          key={ meal.idMeal }
+        />);
       })}
       {/* categoriesList.map((recipeCard) =>  ) */}
       {/* <Footer /> */}
