@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import FoodCards from '../../components/FoodCards';
 // import { apiFood } from '../../services/api';
@@ -63,16 +62,5 @@ const Food = () => {
     </>
   );
 };
-=======
-import React from 'react';
-import Footer from '../../components/Footer';
-
-const Food = () => (
-  <>
-    <h1>Food</h1>
-    <Footer />
-  </>
-);
->>>>>>> 019713ab26c673170d1297cd009ba40e0ff7a2b5
 
 export default Food;
