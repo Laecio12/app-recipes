@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import DoneRecipesCard from '../../components/DoneRecipesCard';
+import { useHistory } from 'react-router-dom';
+import CardDoneRecipesOrFavorite from '../../components/CardDoneRecipesOrFavorite';
+import { deleteFavoriteRecipe } from '../../services/localStorage';
 import { Container, FilterButtons } from './styles';
 
 const RecipesDoneOrFavorite = () => {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [doneRecipesData, setDoneRecipesData] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const history = useHistory();
+
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    let data = [];
+    if (history.location.pathname === '/favorite-recipes') {
+      data = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      setIsFavorite(true);
+    } else {
+      data = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    }
     setDoneRecipes(data);
     setDoneRecipesData(data);
-  }, []);
+  }, [history]);
 
   const filterByFood = () => {
     const filteredFoods = doneRecipesData.filter(({ type }) => type === 'food');
@@ -18,6 +29,12 @@ const RecipesDoneOrFavorite = () => {
   const filterByDrinks = () => {
     const filteredDrinks = doneRecipesData.filter(({ type }) => type === 'drink');
     setDoneRecipes(filteredDrinks);
+  };
+
+  const deleteRecipe = (id) => {
+    const newData = doneRecipes.filter((item) => item.id !== id);
+    setDoneRecipes(newData);
+    deleteFavoriteRecipe(id);
   };
 
   return (
@@ -49,8 +66,14 @@ const RecipesDoneOrFavorite = () => {
         </button>
       </FilterButtons>
       {
-        doneRecipes.map((recipe, index) => (
-          <DoneRecipesCard { ...recipe } key={ index } index={ index } />
+        doneRecipes && doneRecipes.map((recipe, index) => (
+          <CardDoneRecipesOrFavorite
+            deleteRecipe={ deleteRecipe }
+            isFavorite={ isFavorite }
+            { ...recipe }
+            key={ index }
+            index={ index }
+          />
         ))
 
       }
