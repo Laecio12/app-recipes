@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import { Container } from './styles';
 import shareIcon from '../../images/shareIcon.svg';
 import copyToClipboard from '../../utils/copyLink';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
-const DoneRecipesCard = (props) => {
+const CardDoneRecipesOrFavorite = (props) => {
   const { image, category, nationality, alcoholicOrNot,
-    name, index, doneDate, tags, id, type } = props;
+    name, index, doneDate, tags, id, type, deleteRecipe, isFavorite } = props;
 
   const [isCopied, setIsCopied] = useState();
 
@@ -18,6 +19,7 @@ const DoneRecipesCard = (props) => {
       setIsCopied(false);
     }, +'2000');
   };
+
   return (
     <Container>
       <Link to={ `/${type}s/${id}` }>
@@ -45,6 +47,20 @@ const DoneRecipesCard = (props) => {
         />
       </button>
       {
+        isFavorite && (
+          <button
+            onClick={ () => deleteRecipe(id) }
+            type="button"
+          >
+            <img
+              data-testid={ `${index}-horizontal-favorite-btn` }
+              src={ blackHeartIcon }
+              alt="share"
+            />
+          </button>
+        )
+      }
+      {
         tags && tags.slice(0, 2).map((tag) => (
           <p data-testid={ `${index}-${tag}-horizontal-tag` } key={ tag }>{tag}</p>
         ))
@@ -52,7 +68,7 @@ const DoneRecipesCard = (props) => {
     </Container>
   );
 };
-DoneRecipesCard.propTypes = {
+CardDoneRecipesOrFavorite.propTypes = {
   image: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   nationality: PropTypes.string.isRequired,
@@ -63,5 +79,7 @@ DoneRecipesCard.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  deleteRecipe: PropTypes.func.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
 };
-export default DoneRecipesCard;
+export default CardDoneRecipesOrFavorite;
