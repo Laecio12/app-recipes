@@ -1,26 +1,28 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: #EFEFEF;
   overflow: hidden;
   height: 70px;
   margin-top: -15px;
-  align-content: center;
+  bottom: 0px;
 `;
 
 export const Menu = styled.header`
   display: flex;
-  align-content: center;
+  justify-content: space-between;
 `;
 
 export const Button = styled.button`
   border-style: none;
-  margin: auto 50px;
+  margin: 10px;
 `;
 
 export const Search = styled.button`
-
+  background-color: #EFEFEF;
+  margin-top: 2px;
+  padding: 10px;
+  width: 100%;
+  bottom: 0px;
+  border-style:none;
 `;

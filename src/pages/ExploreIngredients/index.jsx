@@ -1,8 +1,12 @@
 import React from 'react';
+import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 const ExploreIngredients = () => (
-  <Footer />
+  <>
+    <Header value="Explore Ingredients" />
+    <Footer />
+  </>
 );
 
 export default ExploreIngredients;

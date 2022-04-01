@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Container from './styles';
 
@@ -14,7 +15,7 @@ const ExploreFood = () => {
 
   return (
     <Container>
-
+      <Header value="Explore Foods" />
       <button
         onClick={ () => history.push('/explore/foods/ingredients') }
         type="button"
