@@ -5,6 +5,7 @@ import FoodDetails from './pages/FoodDetails';
 import Login from './pages/Login';
 import RecipesDoneOrFavorite from './pages/RecipesDoneOrFavorite';
 import RecipesInProgress from './pages/RecipesInProgress';
+import Food from './pages/Food';
 import Drink from './pages/Drink';
 import Explore from './pages/Explore';
 import ExploreIngredients from './pages/ExploreIngredients';
@@ -22,7 +23,7 @@ function App() {
         render={ (params) => <RecipesInProgress { ...params } /> }
       />
       <Route path="/foods/:id" render={ (params) => <FoodDetails { ...params } /> } />
-      {/* <Route path="/foods" component={ Food } /> */}
+      <Route path="/foods" component={ Food } />
       <Route
         path="/drinks/:id/in-progress"
         render={ (params) => <RecipesInProgress { ...params } /> }
