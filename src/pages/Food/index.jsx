@@ -1,6 +1,5 @@
 import React from 'react';
 import Footer from '../../components/Footer';
-// import { drinksByIngredient } from '../../../cypress/mocks/drinksByIngredient'
 
 const Food = () => (
   <>

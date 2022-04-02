@@ -13,6 +13,7 @@ import ExploreNationalities from './pages/ExploreNationalities';
 import NotFound from './pages/NotFound';
 import ExploreFood from './pages/ExploreFood';
 import ExploreDrink from './pages/ExploreDrink';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -33,10 +34,11 @@ function App() {
       <Route path="/done-recipes" component={ RecipesDoneOrFavorite } />
       <Route path="/explore/foods/nationalities" component={ ExploreNationalities } />
       <Route path="/explore/foods/ingredients" component={ ExploreIngredients } />
+      <Route path="/explore/drinks/ingredients" component={ ExploreIngredients } />
       <Route path="/explore/foods" component={ ExploreFood } />
-      <Route path="/explore/drinks" component={ ExploreDrink } />
-      <Route path="/explore" component={ Explore } />
-      {/* <Route path="/profile" component={ Profile } /> */}
+      <Route exact path="/explore/drinks" component={ ExploreDrink } />
+      <Route exact path="/explore" component={ Explore } />
+      <Route path="/profile" component={ Profile } />
       <Route path="/favorite-recipes" component={ RecipesDoneOrFavorite } />
       <Route path="*"><NotFound /></Route>
     </Switch>

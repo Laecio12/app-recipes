@@ -15,13 +15,10 @@ const ExploreNationalities = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const TWELVE = 12;
     if (data) {
       const filterAreas = ['All'];
       data.meals.forEach((item) => {
-        if (item.strArea !== 'Unknown' && filterAreas.length < TWELVE) {
-          filterAreas.push(item.strArea);
-        }
+        filterAreas.push(item.strArea);
       });
       setArea(filterAreas);
     }
@@ -29,12 +26,14 @@ const ExploreNationalities = () => {
 
   useEffect(() => {
     (async () => {
-      const url = !selected || selected === 'All'
-        ? 'https://www.themealdb.com/api/json/v1/1/search.php?s'
-        : `https://www.themealdb.com/api/json/v1/1/filter.php?a=${selected}`;
-      const MAX_ARRAY_LENGTH = 12;
-      const listCards = await getFetch(url);
-      setCards(listCards.meals.slice(0, MAX_ARRAY_LENGTH));
+      if (selected) {
+        const url = !selected || selected === 'All'
+          ? 'https://www.themealdb.com/api/json/v1/1/search.php?s'
+          : `https://www.themealdb.com/api/json/v1/1/filter.php?a=${selected}`;
+        const MAX_ARRAY_LENGTH = 12;
+        const listCards = await getFetch(url);
+        setCards(listCards.meals.slice(0, MAX_ARRAY_LENGTH));
+      }
     })();
   }, [selected]);
 
@@ -71,13 +70,19 @@ const ExploreNationalities = () => {
               key={ i }
               onClick={ () => handleDetails(meal.idMeal) }
               aria-hidden="true"
+              data-testid={ `${i}-recipe-card` }
             >
               <h2
+                data-testid={ `${i}-card-name` }
                 id={ meal.strMeal }
               >
                 {meal.strMeal}
               </h2>
-              <img src={ meal.strMealThumb } alt={ meal.strMeal } />
+              <img
+                src={ meal.strMealThumb }
+                data-testid={ `${i}-card-img` }
+                alt={ meal.strMeal }
+              />
             </div>
           ))
         }
