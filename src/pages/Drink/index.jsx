@@ -3,6 +3,7 @@ import { useDrinks } from '../../hooks/useDrinks';
 
 import Footer from '../../components/Footer';
 import DrinkCards from '../../components/DrinkCards';
+import Header from '../../components/Header';
 
 const Drink = () => {
   const [categories, setCategories] = useState([]);
@@ -28,7 +29,7 @@ const Drink = () => {
   console.log('categ', categories);
   return (
     <>
-      {/* <Header /> */}
+      <Header value="Drinks" />
       <section>
         { categories && categories.map(({ strCategory }, index) => {
           const CARDS_QTT = 5;

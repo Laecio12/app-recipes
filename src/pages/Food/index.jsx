@@ -3,7 +3,7 @@ import { useFoods } from '../../hooks/useFoods';
 import FoodCards from '../../components/FoodCards';
 // import { apiFood } from '../../services/api';
 // import { Container } from './styles';
-// import Header from '../../components/Header/index';
+import Header from '../../components/Header/index';
 import Footer from '../../components/Footer/index';
 
 const Food = () => {
@@ -30,7 +30,7 @@ const Food = () => {
 
   return (
     <>
-      {/* <Header /> */}
+      <Header value="Foods" />
       <section>
         { categories && categories.map(({ strCategory }, index) => {
           const CARDS_QTT = 5;

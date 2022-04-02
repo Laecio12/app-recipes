@@ -20,7 +20,6 @@ export function DrinksProvider({ children }) {
           { strDrink, strDrinkThumb, idDrink, strCategory })));
     }
   };
-
   const filterByCategory = async (category) => {
     // refatorar com um if só, setando e apagando a category no estado;
     if (category === 'All') return setDrinks(drinksData);
@@ -51,7 +50,6 @@ export function DrinksProvider({ children }) {
     </DrinksContext.Provider>
   );
 }
-// const { Drinks} = useDrinks();
 export function useDrinks() {
   const context = useContext(DrinksContext);
   return context;

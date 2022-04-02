@@ -6,7 +6,7 @@ display: flex;
 justify-content: space-between;
 position:fixed;
 bottom: 0px;
-width: 23em;
+width: 100%;
 `;
 
 export const IconsMenu = styled.img``;

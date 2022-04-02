@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { BottonMenu, IconsMenu } from './styles';
 import drinkIcon from '../../images/drinkIcon.svg';
@@ -33,10 +33,10 @@ const Footer = () => {
   );
 };
 
-Footer.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
+// Footer.propTypes = {
+//   history: PropTypes.shape({
+//     push: PropTypes.func.isRequired,
+//   }).isRequired,
+// };
 
 export default Footer;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import HeaderWithoutSearch from '../../components/HeaderWithoutSearch';
 import CardDoneRecipesOrFavorite from '../../components/CardDoneRecipesOrFavorite';
 import { deleteFavoriteRecipe } from '../../services/localStorage';
 import { Container, FilterButtons } from './styles';
@@ -39,6 +40,7 @@ const RecipesDoneOrFavorite = () => {
 
   return (
     <Container>
+      <HeaderWithoutSearch value="Favorite Recipes" />
       <FilterButtons>
         <button
           onClick={ () => setDoneRecipes(doneRecipesData) }
