@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FoodCardContainer = styled.div`
+const DrinkCardContainer = styled.div`
   
   img {
     width:100px;
@@ -8,4 +8,4 @@ const FoodCardContainer = styled.div`
   }
 `;
 
-export default FoodCardContainer;
+export default DrinkCardContainer;

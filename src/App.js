@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Drink from './pages/Drink/index';
 import DrinkDetails from './pages/DrinkDetails ';
 import FoodDetails from './pages/FoodDetails';
 import Login from './pages/Login';
 
 import Food from './pages/Food';
-import Drink from './pages/Drink';
 import Explore from './pages/Explore';
 import ExploreFood from './pages/ExploreFood';
 import ExploreDrink from './pages/ExploreDrink';
