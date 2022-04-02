@@ -26,7 +26,6 @@ const Drink = () => {
     getCategoriesList();
   }, []);
 
-  console.log('categ', categories);
   return (
     <>
       <Header value="Drinks" />
