@@ -92,5 +92,4 @@ const ExploreNationalities = () => {
     </>
   );
 };
-
 export default ExploreNationalities;

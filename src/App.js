@@ -12,8 +12,7 @@ import NotFound from './pages/NotFound';
 import ExploreFood from './pages/ExploreFood';
 import ExploreDrink from './pages/ExploreDrink';
 import Profile from './pages/Profile';
-import RecipesDone from './pages/RecipesDone';
-import RecipesDoneOrFavorite from './pages/RecipesFavorites';
+import RecipesDoneOrFavorite from './pages/RecipesDoneOrFavorites';
 import ExploreNationalities from './pages/ExploreNationalities';
 
 function App() {
@@ -32,7 +31,8 @@ function App() {
       />
       <Route path="/drinks/:id" render={ (params) => <DrinkDetails { ...params } /> } />
       <Route path="/drinks" component={ Drink } />
-      <Route path="/done-recipes" component={ RecipesDone } />
+      <Route path="/favorite-recipes" component={ RecipesDoneOrFavorite } />
+      <Route path="/done-recipes" component={ RecipesDoneOrFavorite } />
       <Route path="/explore/foods/nationalities" component={ ExploreNationalities } />
       <Route path="/explore/foods/ingredients" component={ ExploreIngredients } />
       <Route path="/explore/drinks/ingredients" component={ ExploreIngredients } />
@@ -40,7 +40,6 @@ function App() {
       <Route exact path="/explore/drinks" component={ ExploreDrink } />
       <Route exact path="/explore" component={ Explore } />
       <Route path="/profile" component={ Profile } />
-      <Route path="/favorite-recipes" component={ RecipesDoneOrFavorite } />
       <Route path="*"><NotFound /></Route>
     </Switch>
   );
