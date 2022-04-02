@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { getDrinksAPI, getDrinksByCategoryAPI } from '../services/api';
+import { useHistory } from 'react-router-dom';
+import { getDrinksAPI, getDrinksByCategoryAPI, getFetch } from '../services/api';
 
 const DrinksContext = createContext({});
 
@@ -8,6 +9,7 @@ export function DrinksProvider({ children }) {
   const [drinks, setDrinks] = useState([]);
   const [drinksData, setDrinksData] = useState([]);
   const [crtCategory, setCrtCategory] = useState('');
+  const history = useHistory();
 
   const getDrinkInfos = async () => {
     if (!drinks.length) {
@@ -37,6 +39,15 @@ export function DrinksProvider({ children }) {
     }
   };
 
+  const filterByIngredientDrink = async (ingredient) => {
+    const endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
+    const data = await getFetch(endpoint);
+    console.log(data);
+    setDrinks(data.drinks.map(({ strDrink, strDrinkThumb, idDrink }) => (
+      { strDrink, strDrinkThumb, idDrink })));
+    history.push('/drinks');
+  };
+
   return (
     <DrinksContext.Provider
       value={ {
@@ -44,6 +55,7 @@ export function DrinksProvider({ children }) {
         setDrinks,
         getDrinkInfos,
         filterByCategory,
+        filterByIngredientDrink,
       } }
     >
       {children}

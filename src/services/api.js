@@ -9,8 +9,8 @@ export const useFetch = (url) => {
       setLoading(true);
       try {
         const response = await fetch(url);
-        const recipe = await response.json();
-        setData(recipe);
+        const datasReturned = await response.json();
+        setData(datasReturned);
       } catch (error) {
         setErro(error.message);
       } finally {
@@ -26,6 +26,13 @@ export const getUrlRecipe = (url, id) => {
   const endpoint = url.includes('foods')
     ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
     : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  return endpoint;
+};
+
+export const getEndpoint = (url) => {
+  const endpoint = url.includes('foods')
+    ? 'https://www.themealdb.com/api/json/v1/1/list.php?i=list'
+    : 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
   return endpoint;
 };
 
@@ -54,6 +61,16 @@ export const getDrinksRecommendations = async () => {
   const data = await response.json();
 
   return data.drinks.slice(0, MAX_ARRAY_LENGTH);
+};
+
+export const getFetch = async (url) => {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error.message;
+  }
 };
 
 export const getMealsAPI = async () => {
@@ -97,4 +114,3 @@ export const getDrinksByCategoryAPI = async (name) => {
     return error;
   }
 };
-// apiFood.get('/search.php?s=chicken').then(response => {}).catch(error => {});

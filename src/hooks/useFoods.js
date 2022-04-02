@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { getMealsAPI, getFoodsByCategoryAPI } from '../services/api';
+import { useHistory } from 'react-router-dom';
+import { getMealsAPI, getFoodsByCategoryAPI, getFetch } from '../services/api';
 
 // import { apiFoods } from '../services/api';
 
@@ -10,6 +11,7 @@ export function FoodsProvider({ children }) {
   const [foods, setFoods] = useState([]);
   const [foodData, setFoodData] = useState([]);
   const [crtCategory, setCrtCategory] = useState('');
+  const history = useHistory();
 
   const getMealInfos = async () => {
     if (!foods.length) {
@@ -38,6 +40,14 @@ export function FoodsProvider({ children }) {
     }
   };
 
+  const filterByIngredientFood = async (ingredient) => {
+    const endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`;
+    const data = await getFetch(endpoint);
+    setFoods(data.meals.map(({ strMeal, strMealThumb, idMeal }) => (
+      { strMeal, strMealThumb, idMeal })));
+    history.push('/foods');
+  };
+
   return (
     <FoodsContext.Provider
       value={ {
@@ -46,6 +56,7 @@ export function FoodsProvider({ children }) {
         getMealInfos,
         filterByCategory,
         foodData,
+        filterByIngredientFood,
       } }
     >
       {children}
