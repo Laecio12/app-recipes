@@ -31,8 +31,6 @@ const Food = () => {
   return (
     <>
       {/* <Header /> */}
-      {/* realiza renderização condicional do Header apenas se clicar no search */}
-      {/* <SearchFilters /> */}
       <section>
         { categories && categories.map(({ strCategory }, index) => {
           const CARDS_QTT = 5;
@@ -61,7 +59,6 @@ const Food = () => {
             key={ meal.idMeal }
           />);
       })}
-      {/* categoriesList.map((recipeCard) =>  ) */}
       <Footer />
     </>
   );

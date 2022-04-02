@@ -6,7 +6,7 @@ import DrinkCards from '../../components/DrinkCards';
 
 const Drink = () => {
   const [categories, setCategories] = useState([]);
-  const { getDrinkInfos, drinks } = useDrinks();
+  const { getDrinkInfos, drinks, filterByCategory } = useDrinks();
 
   useEffect(() => {
     getDrinkInfos();
@@ -29,24 +29,24 @@ const Drink = () => {
   return (
     <>
       {/* <Header /> */}
-      {/* realiza renderização condicional do Header apenas se clicar no search */}
-      {/* <SearchFilters /> */}
       <section>
         { categories && categories.map(({ strCategory }, index) => {
           const CARDS_QTT = 5;
           if (index === CARDS_QTT) { strCategory = 'All'; }
           if (index > CARDS_QTT) return null;
           return (
+
             <button
               type="button"
               key={ index }
               data-testid={ `${strCategory}-category-filter` }
+              onClick={ () => filterByCategory(strCategory) }
             >
               {strCategory}
-            </button>);
+            </button>
+          );
         })}
       </section>
-      {/* data-testid="Beef-category-filter" */}
       <p>Drink</p>
       {drinks && drinks.map((drink, index) => {
         const CARDS_QTT = 12;
@@ -59,7 +59,6 @@ const Drink = () => {
             key={ drink.idDrink }
           />);
       })}
-      {/* categoriesList.map((recipeCard) =>  ) */}
       <Footer />
     </>
   );
