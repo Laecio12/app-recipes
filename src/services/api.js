@@ -57,8 +57,31 @@ export const getDrinksRecommendations = async () => {
 };
 
 export const getMealsAPI = async () => {
-  const request = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-  const response = await request.json();
-  return response;
+  try {
+    const request = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const response = await request.json();
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const getDrinksAPI = async () => {
+  try {
+    const request = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const response = await request.json();
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const getFoodsByCategoryAPI = async (category) => {
+  try {
+    const request = await fetch(`www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+    const response = await request.json();
+  } catch (error) {
+    return error;
+  }
 };
 // apiFood.get('/search.php?s=chicken').then(response => {}).catch(error => {});

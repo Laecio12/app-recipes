@@ -31,8 +31,8 @@ function App() {
       <Route path="/drinks/:id" render={ (params) => <DrinkDetails { ...params } /> } />
       <Route path="/explore/foods" component={ ExploreFood } />
       <Route path="/explore/drinks" component={ ExploreDrink } />
-      <Route path="/explore" component={ Explore } />
       <Route path="/foods" component={ Food } />
+      <Route path="/explore" component={ Explore } />
       <Route path="/drinks" component={ Drink } />
       {/*
       <Route path="/explore/foods/ingredients" component={ ExploreIngredients } />
