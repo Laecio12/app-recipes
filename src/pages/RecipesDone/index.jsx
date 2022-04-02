@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import DoneRecipesCard from '../../components/DoneRecipesCard';
+import CardDoneRecipesOrFavorite from '../../components/CardDoneRecipesOrFavorite';
 import HeaderWithoutSearch from '../../components/HeaderWithoutSearch';
 import { Container, FilterButtons } from './styles';
 
@@ -52,7 +52,7 @@ const RecipesDone = () => {
       </FilterButtons>
       {
         doneRecipes.map((recipe, index) => (
-          <DoneRecipesCard { ...recipe } key={ index } index={ index } />
+          <CardDoneRecipesOrFavorite { ...recipe } key={ index } index={ index } />
         ))
 
       }
