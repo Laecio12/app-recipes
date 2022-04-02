@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { getMealsAPI } from '../services/api';
 // import { apiFoods } from '../services/api';
 
 const FoodsContext = createContext({});
@@ -8,15 +9,19 @@ export function FoodsProvider({ children }) {
   const [foods, setFoods] = useState([]);
 
   const getMealInfos = async () => {
-    const request = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    const response = await request.json();
+    if (!foods.length) {
+      const data = await getMealsAPI();
+      setFoods(data.meals.map(({ strMeal, strMealThumb, idMeal }) => (
+        { strMeal, strMealThumb, idMeal })));
+    }
+  };
 
   return (
     <FoodsContext.Provider
       value={ {
         foods,
         setFoods,
-
+        getMealInfos,
       } }
     >
       {children}

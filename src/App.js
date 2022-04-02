@@ -1,11 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Drink from './pages/Drink/index';
 import DrinkDetails from './pages/DrinkDetails ';
 import FoodDetails from './pages/FoodDetails';
 import Login from './pages/Login';
 import RecipesDoneOrFavorite from './pages/RecipesDoneOrFavorite';
-
 import RecipesInProgress from './pages/RecipesInProgress';
+import Food from './pages/Food';
 
 // import Food from './pages/Food';
 // import Drink from './pages/Drink';
@@ -31,8 +32,9 @@ function App() {
       <Route path="/explore/foods" component={ ExploreFood } />
       <Route path="/explore/drinks" component={ ExploreDrink } />
       <Route path="/explore" component={ Explore } />
-      {/* <Route path="/foods" component={ Food } />
+      <Route path="/foods" component={ Food } />
       <Route path="/drinks" component={ Drink } />
+      {/*
       <Route path="/explore/foods/ingredients" component={ ExploreIngredients } />
       <Route path="/explore/drink/ingredients" component={ ExploreIngredients } />
       <Route path="explore/foods/nationalities" component={ ExploreNationalities } />

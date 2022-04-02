@@ -55,4 +55,10 @@ export const getDrinksRecommendations = async () => {
 
   return data.drinks.slice(0, MAX_ARRAY_LENGTH);
 };
+
+export const getMealsAPI = async () => {
+  const request = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const response = await request.json();
+  return response;
+};
 // apiFood.get('/search.php?s=chicken').then(response => {}).catch(error => {});

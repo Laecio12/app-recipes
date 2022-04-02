@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useFoods } from '../../hooks/useFoods';
 import FoodCards from '../../components/FoodCards';
+import Footer from '../../components/Footer';
 // import { apiFood } from '../../services/api';
 // import { Container } from './styles';
 // import Header from '../../components/Header/index';
@@ -7,18 +9,11 @@ import FoodCards from '../../components/FoodCards';
 
 const Food = () => {
   const [categories, setCategories] = useState([]);
-  const [meals, setMeals] = useState([]);
+  const { getMealInfos, foods } = useFoods();
 
   useEffect(() => {
-    const getMealInfos = async () => {
-      const request = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-      const response = await request.json();
-      console.log('response', response);
-      setMeals(response.meals
-        .map(({ strMeal, strMealThumb, idMeal }) => ({ strMeal, strMealThumb, idMeal })));
-    };
     getMealInfos();
-  }, []);
+  }, [getMealInfos]);
 
   useEffect(() => {
     const getCategoriesList = async () => {
@@ -46,12 +41,11 @@ const Food = () => {
         })}
       </section>
       <p>Food</p>
-      {meals.map((meal, index) => {
+      {foods && foods.map((meal, index) => {
         const CARDS_QTT = 11;
         if (index > CARDS_QTT) return null;
-        console.log('meals', meals);
         return (<FoodCards
-          data-testid={ `${index}-recipe-card` }
+          dataTestid={ `${index}-recipe-card` }
           { ...meal }
           index={ index }
           key={ meal.idMeal }
@@ -59,6 +53,7 @@ const Food = () => {
       })}
       {/* categoriesList.map((recipeCard) =>  ) */}
       {/* <Footer /> */}
+      <Footer />
     </>
   );
 };
