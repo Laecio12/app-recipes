@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 const Food = () => (
   <>
-    <h1>Food</h1>
+    <Header value="Foods" />
     <div data-testid="0-recipe-card">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
       <img src="" data-testid="0-card-img" alt="title" />

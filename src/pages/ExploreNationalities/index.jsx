@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useFetch, getFetch } from '../../services/api';
 import { CardArea } from './styles';
@@ -47,7 +48,7 @@ const ExploreNationalities = () => {
 
   return (
     <>
-      <h1>Nationalities</h1>
+      <Header value="Explore Nationalities" />
       <select data-testid="explore-by-nationality-dropdown" onChange={ getOption }>
         {
           area.map((item, i) => (

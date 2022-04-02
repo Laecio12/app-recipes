@@ -3,17 +3,18 @@ import { Route, Switch } from 'react-router-dom';
 import DrinkDetails from './pages/DrinkDetails ';
 import FoodDetails from './pages/FoodDetails';
 import Login from './pages/Login';
-import RecipesDoneOrFavorite from './pages/RecipesDoneOrFavorite';
 import RecipesInProgress from './pages/RecipesInProgress';
 import Food from './pages/Food';
 import Drink from './pages/Drink';
 import Explore from './pages/Explore';
 import ExploreIngredients from './pages/ExploreIngredients';
-import ExploreNationalities from './pages/ExploreNationalities';
 import NotFound from './pages/NotFound';
 import ExploreFood from './pages/ExploreFood';
 import ExploreDrink from './pages/ExploreDrink';
 import Profile from './pages/Profile';
+import RecipesDone from './pages/RecipesDone';
+import RecipesDoneOrFavorite from './pages/RecipesFavorites';
+import ExploreNationalities from './pages/ExploreNationalities';
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
       />
       <Route path="/drinks/:id" render={ (params) => <DrinkDetails { ...params } /> } />
       <Route path="/drinks" component={ Drink } />
-      <Route path="/done-recipes" component={ RecipesDoneOrFavorite } />
+      <Route path="/done-recipes" component={ RecipesDone } />
       <Route path="/explore/foods/nationalities" component={ ExploreNationalities } />
       <Route path="/explore/foods/ingredients" component={ ExploreIngredients } />
       <Route path="/explore/drinks/ingredients" component={ ExploreIngredients } />
@@ -42,7 +43,6 @@ function App() {
       <Route path="/favorite-recipes" component={ RecipesDoneOrFavorite } />
       <Route path="*"><NotFound /></Route>
     </Switch>
-
   );
 }
 
