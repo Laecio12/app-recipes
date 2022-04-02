@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-`;
+export const submitBtn = styled.div`
 
-export const Containerw = styled.div`
+`;
+export const Container = styled.div`
 `;

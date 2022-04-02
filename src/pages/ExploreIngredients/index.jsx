@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 import Footer from '../../components/Footer';
 import { CardIngredient, ListCards } from './styles';
 import { useFetch, getEndpoint } from '../../services/api';
+import { useFoods } from '../../hooks/useFoods';
+import { useDrinks } from '../../hooks/useDrinks';
 
 const ExploreIngredients = ({ match: { url } }) => {
   const [ingredients, setIngredients] = useState([]);
+  const [type, setType] = useState('');
+
+  const { filterByIngredientFood } = useFoods();
+  const { filterByIngredientDrink } = useDrinks();
   const endpoint = getEndpoint(url);
   const { data } = useFetch(endpoint);
-
-  const history = useHistory();
 
   useEffect(() => {
     const listIngredients = [];
@@ -26,15 +29,18 @@ const ExploreIngredients = ({ match: { url } }) => {
 
     if (data && url.includes('foods')) {
       setList(data.meals);
+      setType('meals');
     }
     if (data && url.includes('drinks')) {
       setList(data.drinks);
+      setType('drinks');
     }
     setIngredients(listIngredients);
   }, [data, url]);
 
-  const handleRedirectRecipes = (/* ingredient */) => {
-    history.push('/foods');
+  const handleRedirectRecipes = (ingredient) => {
+    if (type === 'meals') filterByIngredientFood(ingredient);
+    if (type === 'drinks') filterByIngredientDrink(ingredient);
     // history.push(`/foods/${ingredient}`);
     // url para bebida por ing: https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka
     // url para api foods: https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken_breast
@@ -50,7 +56,7 @@ const ExploreIngredients = ({ match: { url } }) => {
             <CardIngredient
               data-testid={ `${i}-ingredient-card` }
               key={ i }
-              onClick={ handleRedirectRecipes }
+              onClick={ () => handleRedirectRecipes(strIngredient || strIngredient1) }
               // onClick={ () => handleRedirectRecipes(strIngredient || strIngredient1) }
             >
               <img
