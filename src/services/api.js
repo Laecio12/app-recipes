@@ -78,8 +78,21 @@ export const getDrinksAPI = async () => {
 
 export const getFoodsByCategoryAPI = async (category) => {
   try {
-    const request = await fetch(`www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+    const URL_API = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+    const request = await fetch(URL_API);
     const response = await request.json();
+    return response.meals;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getDrinksByCategoryAPI = async (name) => {
+  try {
+    const URL_API = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${name}`;
+    const request = await fetch(URL_API);
+    const response = await request.json();
+    return response.drinks;
   } catch (error) {
     return error;
   }

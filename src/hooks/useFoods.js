@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { getMealsAPI } from '../services/api';
+import { getMealsAPI, getFoodsByCategoryAPI } from '../services/api';
 
 // import { apiFoods } from '../services/api';
 
@@ -22,8 +22,9 @@ export function FoodsProvider({ children }) {
 
   const filterByCategory = async (category) => {
     if (category === 'All') return setFoods(foodData);
-    const fltrdByCatData = foodData.filter(({ strCategory }) => strCategory === category);
-    setFoods(fltrdByCatData);
+    const fltrdByCatData = await getFoodsByCategoryAPI(category);
+    console.log(fltrdByCatData);
+    return fltrdByCatData && setFoods(fltrdByCatData);
   };
 
   return (
