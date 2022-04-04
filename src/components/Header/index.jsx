@@ -4,10 +4,69 @@ import { useHistory } from 'react-router-dom';
 import { Container, Menu, Button, Search } from './styles';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
+import { useFoods } from '../../hooks/useFoods';
+import { useDrinks } from '../../hooks/useDrinks';
+import { getFetch } from '../../services/api';
 
 const Header = ({ value }) => {
+  const { setFoods } = useFoods();
+  const { setDrinks } = useDrinks();
   const [searchBar, setSearchBar] = useState(false);
+  const [inputSearch, setInputSearch] = useState('');
+  const [radioFilter, setRadioFilter] = useState('');
   const history = useHistory();
+  let result = [];
+
+  console.log(value);
+
+  const searchType = (target) => {
+    setRadioFilter(target.id);
+  };
+
+  const FilterByRadio = async () => {
+    if (value === 'Foods') {
+      switch (radioFilter) {
+      case 'Ingredients':
+        result = await getFetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputSearch}`);
+        setFoods(result.meals);
+        break;
+      case 'Name':
+        result = await getFetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputSearch}`);
+        setFoods(result.meals);
+        break;
+      case 'Firstletter':
+        if (inputSearch.length > 1) {
+          return global.alert('Your search must have only 1 (one) character');
+        }
+        result = await getFetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${inputSearch}`);
+        setFoods(result.meals);
+        break;
+      default:
+        break;
+      }
+    } if (value === 'Drinks') {
+      switch (radioFilter) {
+      case 'Ingredients':
+        result = await getFetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputSearch}`);
+        setDrinks(result.drinks);
+        break;
+      case 'Name':
+        result = await getFetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputSearch}`);
+        setDrinks(result.drinks);
+        break;
+      case 'Firstletter':
+        if (inputSearch.length > 1) {
+          return global.alert('Your search must have only 1 (one) character');
+        }
+        result = await getFetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputSearch}`);
+        setDrinks(result.drinks);
+        break;
+      default:
+        break;
+      }
+    }
+  };
+
   return (
     <>
       <Container>
@@ -35,7 +94,7 @@ const Header = ({ value }) => {
               <div>
                 <label htmlFor="search">
                   <input
-                    onChange={ ({ target }) => setSearchRecipe(target.value) }
+                    onChange={ ({ target }) => setInputSearch(target.value) }
                     id="search"
                     data-testid="search-input"
                     placeholder="Search Recipe"
@@ -48,7 +107,7 @@ const Header = ({ value }) => {
                   type="radio"
                   data-testid="ingredient-search-radio"
                   name="radio"
-                  onChange={ ({ target }) => (setSearchType(target.id)) }
+                  onChange={ ({ target }) => (searchType(target)) }
                 />
                 Ingredients
               </label>
@@ -58,7 +117,7 @@ const Header = ({ value }) => {
                   type="radio"
                   data-testid="name-search-radio"
                   name="radio"
-                  onChange={ ({ target }) => (setSearchType(target.id)) }
+                  onChange={ ({ target }) => (searchType(target)) }
                 />
                 Name
               </label>
@@ -68,7 +127,7 @@ const Header = ({ value }) => {
                   type="radio"
                   data-testid="first-letter-search-radio"
                   name="radio"
-                  onChange={ ({ target }) => (setSearchType(target.id)) }
+                  onChange={ ({ target }) => (searchType(target)) }
                 />
                 First Letter
               </label>
@@ -77,7 +136,7 @@ const Header = ({ value }) => {
                 type="button"
                 label="button"
                 data-testid="exec-search-btn"
-                onClick={ () => setAPI({ searchType, searchRecipe }) }
+                onClick={ FilterByRadio }
               >
                 Search
               </button>
