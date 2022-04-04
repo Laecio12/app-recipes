@@ -17,7 +17,39 @@ const Header = ({ value }) => {
   const history = useHistory();
   let result = [];
 
-  console.log(value);
+  const checkOneResult = (obj) => {
+    if (obj.length === 1 && value === 'Foods') {
+      const { idMeal } = obj[0];
+      history.push(`/foods/${idMeal}`);
+    } else if (obj.length === 1 && value === 'Drinks') {
+      const { idDrink } = obj[0];
+      history.push(`/drinks/${idDrink}`);
+    }
+  };
+
+  const getByFoodName = async () => {
+    try {
+      result = await getFetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputSearch}`);
+      if (result.meals.length) {
+        setFoods(result.meals);
+      }
+    } catch (error) {
+      return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+    checkOneResult(result.meals);
+  };
+
+  const getByDrinkName = async () => {
+    try {
+      result = await getFetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputSearch}`);
+      if (result.drinks.length) {
+        setDrinks(result.drinks);
+      }
+    } catch (error) {
+      return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+    checkOneResult(result.drinks);
+  };
 
   const searchType = (target) => {
     setRadioFilter(target.id);
@@ -29,10 +61,10 @@ const Header = ({ value }) => {
       case 'Ingredients':
         result = await getFetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputSearch}`);
         setFoods(result.meals);
+        checkOneResult(result.meals);
         break;
       case 'Name':
-        result = await getFetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputSearch}`);
-        setFoods(result.meals);
+        getByFoodName();
         break;
       case 'Firstletter':
         if (inputSearch.length > 1) {
@@ -40,6 +72,7 @@ const Header = ({ value }) => {
         }
         result = await getFetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${inputSearch}`);
         setFoods(result.meals);
+        checkOneResult(result.meals);
         break;
       default:
         break;
@@ -49,10 +82,10 @@ const Header = ({ value }) => {
       case 'Ingredients':
         result = await getFetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputSearch}`);
         setDrinks(result.drinks);
+        checkOneResult(result.drinks);
         break;
       case 'Name':
-        result = await getFetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputSearch}`);
-        setDrinks(result.drinks);
+        getByDrinkName();
         break;
       case 'Firstletter':
         if (inputSearch.length > 1) {
@@ -60,6 +93,7 @@ const Header = ({ value }) => {
         }
         result = await getFetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputSearch}`);
         setDrinks(result.drinks);
+        checkOneResult(result.drinks);
         break;
       default:
         break;
