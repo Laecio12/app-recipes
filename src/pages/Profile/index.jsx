@@ -11,8 +11,6 @@ function Profile() {
   const handleClick = () => {
     localStorage.clear();
     history.push('/');
-    setEmail('');
-    setPassword('');
   };
 
   return (
