@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import HeaderWithoutSearch from '../../components/HeaderWithoutSearch';
 import CardDoneRecipesOrFavorite from '../../components/CardDoneRecipesOrFavorite';
 import { deleteFavoriteRecipe } from '../../services/localStorage';
-import { Container, FilterButtons } from './styles';
+import { Container, FilterButtons, Cards } from './styles';
 
 const RecipesFavorites = () => {
   const [doneRecipes, setDoneRecipes] = useState([]);
@@ -67,18 +67,20 @@ const RecipesFavorites = () => {
 
         </button>
       </FilterButtons>
-      {
-        doneRecipes && doneRecipes.map((recipe, index) => (
-          <CardDoneRecipesOrFavorite
-            deleteRecipe={ deleteRecipe }
-            isFavorite={ isFavorite }
-            { ...recipe }
-            key={ index }
-            index={ index }
-          />
-        ))
+      <Cards>
+        {
+          doneRecipes && doneRecipes.map((recipe, index) => (
+            <CardDoneRecipesOrFavorite
+              deleteRecipe={ deleteRecipe }
+              isFavorite={ isFavorite }
+              { ...recipe }
+              key={ index }
+              index={ index }
+            />
+          ))
 
-      }
+        }
+      </Cards>
     </Container>
   );
 };

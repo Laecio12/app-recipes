@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Form, ButtonSubmit } from './styles';
 import * as saveInLocalStorage from '../../services/localStorage';
+import prato from '../../images/Group-104-1.png';
 
 const Login = () => {
   const [email, setEmail] = React.useState('');
@@ -38,18 +39,21 @@ const Login = () => {
 
   return (
     <Container>
+      <img width="200px" height="200px" src={ prato } alt="tryfood" />
       <Form>
         <input
           data-testid="email-input"
           name="email"
           type="text"
           onChange={ ({ target }) => handleChange(target.value, target.name) }
+          placeholder="Email"
         />
         <input
           name="password"
           data-testid="password-input"
           type="password"
           onChange={ ({ target }) => handleChange(target.value, target.name) }
+          placeholder="Senha"
         />
         <ButtonSubmit
           disabled={ isDisabledButton }

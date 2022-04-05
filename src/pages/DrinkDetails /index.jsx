@@ -8,12 +8,16 @@ import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 import {
+  Cards,
   Container,
   Content,
   FavoriteBtn,
   ShareBtn,
   StartRecipeBtn,
-  Cards,
+  ShareAndFavorite,
+  ImageContent,
+  Ingredients,
+  Instructions,
 } from './styles';
 import copyToClipboard from '../../utils/copyLink';
 import getIngredients from '../../utils/getIngredients';
@@ -84,40 +88,48 @@ const DrinkDetails = ({ match }) => {
   return (
     <Container>
       <Content>
-        <img
-          data-testid="recipe-photo"
-          src={ drink.strDrinkThumb }
-          alt={ drink.strDrink }
-        />
+        <ImageContent>
+          <img
+            data-testid="recipe-photo"
+            src={ drink.strDrinkThumb }
+            alt={ drink.strDrink }
+          />
+        </ImageContent>
         <h1
           data-testid="recipe-title"
         >
           {drink.strDrink}
         </h1>
-        <ShareBtn
-          data-testid="share-btn"
-          onClick={ copyLink }
-        >
-          {isCopied ? 'Link copied!' : <img src={ shareIcon } alt="Share" />}
-        </ShareBtn>
-        <FavoriteBtn
-          onClick={ handleFavorite }
-        >
-          <img data-testid="favorite-btn" src={ favoriteIcon } alt="Favorite" />
-        </FavoriteBtn>
+        <ShareAndFavorite>
+          <ShareBtn
+            data-testid="share-btn"
+            onClick={ copyLink }
+          >
+            {isCopied ? 'Link copied!' : <img src={ shareIcon } alt="Share" />}
+          </ShareBtn>
+          <FavoriteBtn
+            onClick={ handleFavorite }
+          >
+            <img data-testid="favorite-btn" src={ favoriteIcon } alt="Favorite" />
+          </FavoriteBtn>
+        </ShareAndFavorite>
         <p data-testid="recipe-category">{drink.strAlcoholic}</p>
-        {
-          ingredients.map((ingredient, index) => (
-            <p
-              data-testid={ `${index}-ingredient-name-and-measure` }
-              key={ ingredient.id }
-            >
-              { `${ingredient} - ${drink[`strMeasure${index + 1}`]}` }
-            </p>
-          ))
-        }
-        <p data-testid="instructions">{drink.strInstructions}</p>
-        <h1>Recommendations</h1>
+        <Ingredients>
+
+          {
+            ingredients.map((ingredient, index) => (
+              <p
+                data-testid={ `${index}-ingredient-name-and-measure` }
+                key={ ingredient.id }
+              >
+                { `${ingredient} - ${drink[`strMeasure${index + 1}`]}` }
+              </p>
+            ))
+          }
+        </Ingredients>
+        <Instructions>
+          <p data-testid="instructions">{drink.strInstructions}</p>
+        </Instructions>
         <Cards>
           {
             recommendations.map((food, index) => (

@@ -15,6 +15,10 @@ import {
   FavoriteBtn,
   ShareBtn,
   StartRecipeBtn,
+  ShareAndFavorite,
+  ImageContent,
+  Ingredients,
+  Instructions,
 } from './styles';
 import copyToClipboard from '../../utils/copyLink';
 import {
@@ -40,8 +44,8 @@ const FoodDetails = ({ match }) => {
 
   useEffect(() => {
     async function getFood() {
-      const meal = await getFoodDetails(id);
       const recommendationsData = await getDrinksRecommendations();
+      const meal = await getFoodDetails(id);
 
       setFood(meal);
       getIngredients(meal, setIngredients);
@@ -88,43 +92,55 @@ const FoodDetails = ({ match }) => {
   return (
     <Container>
       <Content>
-        <img
-          data-testid="recipe-photo"
-          src={ food.strMealThumb }
-          alt={ food.strMeal }
-        />
+        <ImageContent>
+
+          <img
+            data-testid="recipe-photo"
+            src={ food.strMealThumb }
+            alt={ food.strMeal }
+          />
+        </ImageContent>
         <h1 data-testid="recipe-title">
           {food.strMeal}
         </h1>
-        <ShareBtn
-          data-testid="share-btn"
-          onClick={ copyLink }
-        >
-          {isCopied ? 'Link copied!' : <img src={ shareIcon } alt="Share" />}
-        </ShareBtn>
-        <FavoriteBtn
-          onClick={ handleFavorite }
-        >
-          <img data-testid="favorite-btn" src={ favoriteIcon } alt="Favorite" />
-        </FavoriteBtn>
+        <ShareAndFavorite>
+
+          <ShareBtn
+            data-testid="share-btn"
+            onClick={ copyLink }
+          >
+            {isCopied ? 'Link copied!' : <img src={ shareIcon } alt="Share" />}
+          </ShareBtn>
+          <FavoriteBtn
+            onClick={ handleFavorite }
+          >
+            <img data-testid="favorite-btn" src={ favoriteIcon } alt="Favorite" />
+          </FavoriteBtn>
+        </ShareAndFavorite>
         <p data-testid="recipe-category">{food.strCategory}</p>
-        {
-          ingredients.map((ingredient, index) => (
-            <p
-              data-testid={ `${index}-ingredient-name-and-measure` }
-              key={ ingredient.id }
-            >
-              { `${ingredient} - ${food[`strMeasure${index + 1}`]}` }
-            </p>
-          ))
-        }
-        <p data-testid="instructions">{food.strInstructions}</p>
+        <Ingredients>
+
+          {
+            ingredients.map((ingredient, index) => (
+              <p
+                data-testid={ `${index}-ingredient-name-and-measure` }
+                key={ ingredient.id }
+              >
+                <span>{ingredient}</span>
+                <span>..........................</span>
+                <span>{food[`strMeasure${index + 1}`]}</span>
+              </p>
+            ))
+          }
+        </Ingredients>
+        <Instructions>
+          <p data-testid="instructions">{food.strInstructions}</p>
+        </Instructions>
         <ReactPlayer
-          width="100%"
+          width="95vw"
           data-testid="video"
           url={ food.strYoutube }
         />
-        <h1>Recommendations</h1>
         <Cards>
           {
             recommendations.map((drink, index) => (

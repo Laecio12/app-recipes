@@ -15,6 +15,7 @@ import Profile from './pages/Profile';
 import RecipesDone from './pages/RecipesDone';
 import ExploreNationalities from './pages/ExploreNationalities';
 import RecipesFavorites from './pages/RecipesFavorites';
+import './App.css';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         path="/drinks/:id/in-progress"
         render={ (params) => <RecipesInProgress { ...params } /> }
       />
+      <Route path="/done-recipes" component={ RecipesDone } />
       <Route path="/drinks/:id" render={ (params) => <DrinkDetails { ...params } /> } />
       <Route path="/drinks" component={ Drink } />
       <Route path="/favorite-recipes" component={ RecipesFavorites } />
