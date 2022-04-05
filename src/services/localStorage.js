@@ -64,11 +64,7 @@ export const deleteFavoriteRecipe = (id) => {
   localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
 };
 
-<<<<<<< HEAD
-export const setDoneRecipes = (recipe) => {
-=======
 export const setDoneRecipe = (recipe) => {
->>>>>>> 8084444e026d5ea1064837a8c0b8f12ed26931a3
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, recipe]));
 };
