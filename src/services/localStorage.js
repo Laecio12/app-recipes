@@ -63,3 +63,8 @@ export const deleteFavoriteRecipe = (id) => {
   const newFavoriteRecipes = favoriteRecipes.filter((recipe) => recipe.id !== id);
   localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
 };
+
+export const setDoneRecipes = (recipe) => {
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, recipe]));
+};
