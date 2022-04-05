@@ -30,40 +30,42 @@ const Food = () => {
   }, []);
 
   return (
-    <FoodPageContainer>
+    <>
       <Header value="Foods" />
-      <section>
-        { categories && categories.map(({ strCategory }, index) => {
-          const CARDS_QTT = 5;
-          if (index === CARDS_QTT) { strCategory = 'All'; }
-          if (index > CARDS_QTT) return null;
-          return (
-            <button
-              type="button"
-              key={ index }
-              data-testid={ `${strCategory}-category-filter` }
-              onClick={ () => filterByCategory(strCategory) }
-            >
-              {strCategory}
-            </button>);
-        })}
-      </section>
-      <p>Food</p>
-      <section>
-        {foods && foods.map((meal, index) => {
-          const CARDS_QTT = 12;
-          if (index >= CARDS_QTT) return null;
-          return (
-            <FoodCards
-              dataTestid={ `${index}-recipe-card` }
-              { ...meal }
-              index={ index }
-              key={ meal.idMeal }
-            />);
-        })}
-      </section>
+      <FoodPageContainer>
+        <section>
+          { categories && categories.map(({ strCategory }, index) => {
+            const CARDS_QTT = 5;
+            if (index === CARDS_QTT) { strCategory = 'All'; }
+            if (index > CARDS_QTT) return null;
+            return (
+              <button
+                type="button"
+                key={ index }
+                data-testid={ `${strCategory}-category-filter` }
+                onClick={ () => filterByCategory(strCategory) }
+              >
+                {strCategory}
+              </button>);
+          })}
+        </section>
+        <p>Food</p>
+        <section>
+          {foods && foods.map((meal, index) => {
+            const CARDS_QTT = 12;
+            if (index >= CARDS_QTT) return null;
+            return (
+              <FoodCards
+                dataTestid={ `${index}-recipe-card` }
+                { ...meal }
+                index={ index }
+                key={ meal.idMeal }
+              />);
+          })}
+        </section>
+      </FoodPageContainer>
       <Footer />
-    </FoodPageContainer>
+    </>
   );
 };
 
