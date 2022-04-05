@@ -8,12 +8,14 @@ import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 import {
+  Cards,
   Container,
   Content,
   FavoriteBtn,
   ShareBtn,
   StartRecipeBtn,
-  Cards,
+  ShareAndFavorite,
+  ImageRecipe,
 } from './styles';
 import copyToClipboard from '../../utils/copyLink';
 import getIngredients from '../../utils/getIngredients';
@@ -84,7 +86,7 @@ const DrinkDetails = ({ match }) => {
   return (
     <Container>
       <Content>
-        <img
+        <ImageRecipe
           data-testid="recipe-photo"
           src={ drink.strDrinkThumb }
           alt={ drink.strDrink }
@@ -94,17 +96,19 @@ const DrinkDetails = ({ match }) => {
         >
           {drink.strDrink}
         </h1>
-        <ShareBtn
-          data-testid="share-btn"
-          onClick={ copyLink }
-        >
-          {isCopied ? 'Link copied!' : <img src={ shareIcon } alt="Share" />}
-        </ShareBtn>
-        <FavoriteBtn
-          onClick={ handleFavorite }
-        >
-          <img data-testid="favorite-btn" src={ favoriteIcon } alt="Favorite" />
-        </FavoriteBtn>
+        <ShareAndFavorite>
+          <ShareBtn
+            data-testid="share-btn"
+            onClick={ copyLink }
+          >
+            {isCopied ? 'Link copied!' : <img src={ shareIcon } alt="Share" />}
+          </ShareBtn>
+          <FavoriteBtn
+            onClick={ handleFavorite }
+          >
+            <img data-testid="favorite-btn" src={ favoriteIcon } alt="Favorite" />
+          </FavoriteBtn>
+        </ShareAndFavorite>
         <p data-testid="recipe-category">{drink.strAlcoholic}</p>
         {
           ingredients.map((ingredient, index) => (

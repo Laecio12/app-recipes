@@ -21,6 +21,7 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
+      <Route path="/foods/:id" render={ (params) => <FoodDetails { ...params } /> } />
       <Route
         path="/foods/:id/in-progress"
         render={ (params) => <RecipesInProgress { ...params } /> }
@@ -30,7 +31,6 @@ function App() {
         render={ (params) => <RecipesInProgress { ...params } /> }
       />
       <Route path="/done-recipes" component={ RecipesDone } />
-      <Route path="/foods/:id" render={ (params) => <FoodDetails { ...params } /> } />
       <Route path="/drinks/:id" render={ (params) => <DrinkDetails { ...params } /> } />
       <Route path="/explore/drinks/ingredients" component={ ExploreDrinkIngredients } />
       <Route path="/explore/foods/ingredients" component={ ExploreFoodIngredients } />

@@ -44,12 +44,14 @@ const Login = () => {
           name="email"
           type="text"
           onChange={ ({ target }) => handleChange(target.value, target.name) }
+          placeholder="Email"
         />
         <input
           name="password"
           data-testid="password-input"
           type="password"
           onChange={ ({ target }) => handleChange(target.value, target.name) }
+          placeholder="Senha"
         />
         <ButtonSubmit
           disabled={ isDisabledButton }

@@ -15,6 +15,8 @@ import {
   FavoriteBtn,
   ShareBtn,
   StartRecipeBtn,
+  ShareAndFavorite,
+  ImageRecipe,
 } from './styles';
 import copyToClipboard from '../../utils/copyLink';
 import {
@@ -40,8 +42,8 @@ const FoodDetails = ({ match }) => {
 
   useEffect(() => {
     async function getFood() {
-      const meal = await getFoodDetails(id);
       const recommendationsData = await getDrinksRecommendations();
+      const meal = await getFoodDetails(id);
 
       setFood(meal);
       getIngredients(meal, setIngredients);
@@ -87,7 +89,7 @@ const FoodDetails = ({ match }) => {
   return (
     <Container>
       <Content>
-        <img
+        <ImageRecipe
           data-testid="recipe-photo"
           src={ food.strMealThumb }
           alt={ food.strMeal }
@@ -95,17 +97,20 @@ const FoodDetails = ({ match }) => {
         <h1 data-testid="recipe-title">
           {food.strMeal}
         </h1>
-        <ShareBtn
-          data-testid="share-btn"
-          onClick={ copyLink }
-        >
-          {isCopied ? 'Link copied!' : <img src={ shareIcon } alt="Share" />}
-        </ShareBtn>
-        <FavoriteBtn
-          onClick={ handleFavorite }
-        >
-          <img data-testid="favorite-btn" src={ favoriteIcon } alt="Favorite" />
-        </FavoriteBtn>
+        <ShareAndFavorite>
+
+          <ShareBtn
+            data-testid="share-btn"
+            onClick={ copyLink }
+          >
+            {isCopied ? 'Link copied!' : <img src={ shareIcon } alt="Share" />}
+          </ShareBtn>
+          <FavoriteBtn
+            onClick={ handleFavorite }
+          >
+            <img data-testid="favorite-btn" src={ favoriteIcon } alt="Favorite" />
+          </FavoriteBtn>
+        </ShareAndFavorite>
         <p data-testid="recipe-category">{food.strCategory}</p>
         {
           ingredients.map((ingredient, index) => (
@@ -119,7 +124,7 @@ const FoodDetails = ({ match }) => {
         }
         <p data-testid="instructions">{food.strInstructions}</p>
         <ReactPlayer
-          width="100%"
+          width="95vw"
           data-testid="video"
           url={ food.strYoutube }
         />

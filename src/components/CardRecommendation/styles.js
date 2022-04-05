@@ -6,8 +6,14 @@ const Container = styled.div`
   flex-direction: column;
   width: 170px;
   margin-right: 10px;
-  img {
+  margin-top: 10px;  
+  img { 
     width: 150px;
+    height: 150px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow:0 0 1em #000;
+     
   }
 `;
 
