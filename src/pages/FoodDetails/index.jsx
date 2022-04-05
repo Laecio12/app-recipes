@@ -61,9 +61,10 @@ const FoodDetails = ({ match }) => {
   const copyLink = () => {
     copyToClipboard(`http://localhost:3000${history.location.pathname}`);
     setIsCopied(true);
+    const TWO_SECONDS = 2000;
     setTimeout(() => {
       setIsCopied(false);
-    }, +'2000');
+    }, TWO_SECONDS);
   };
 
   const handleFavorite = () => {

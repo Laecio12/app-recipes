@@ -5,7 +5,7 @@ import CardDoneRecipesOrFavorite from '../../components/CardDoneRecipesOrFavorit
 import { deleteFavoriteRecipe } from '../../services/localStorage';
 import { Container, FilterButtons } from './styles';
 
-const RecipesDoneOrFavorite = () => {
+const RecipesFavorites = () => {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [doneRecipesData, setDoneRecipesData] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -83,4 +83,4 @@ const RecipesDoneOrFavorite = () => {
   );
 };
 
-export default RecipesDoneOrFavorite;
+export default RecipesFavorites;

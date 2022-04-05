@@ -1,10 +1,4 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-
-export const apiFood = axios.create({ baseURL: 'https://www.themealdb.com/api/json/v1/1' });
-export const apiDrinks = axios.create(
-  { baseURL: 'https://www.thecocktaildb.com/api/json/v1/1/' },
-);
 
 export const useFetch = (url) => {
   const [data, setData] = useState(null);
@@ -15,8 +9,8 @@ export const useFetch = (url) => {
       setLoading(true);
       try {
         const response = await fetch(url);
-        const recipe = await response.json();
-        setData(recipe);
+        const datasReturned = await response.json();
+        setData(datasReturned);
       } catch (error) {
         setErro(error.message);
       } finally {
@@ -32,6 +26,13 @@ export const getUrlRecipe = (url, id) => {
   const endpoint = url.includes('foods')
     ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
     : `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  return endpoint;
+};
+
+export const getEndpoint = (url) => {
+  const endpoint = url.includes('foods')
+    ? 'https://www.themealdb.com/api/json/v1/1/list.php?i=list'
+    : 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
   return endpoint;
 };
 
@@ -61,4 +62,55 @@ export const getDrinksRecommendations = async () => {
 
   return data.drinks.slice(0, MAX_ARRAY_LENGTH);
 };
-// apiFood.get('/search.php?s=chicken').then(response => {}).catch(error => {});
+
+export const getFetch = async (url) => {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const getMealsAPI = async () => {
+  try {
+    const request = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const response = await request.json();
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const getDrinksAPI = async () => {
+  try {
+    const request = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const response = await request.json();
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const getFoodsByCategoryAPI = async (category) => {
+  try {
+    const URL_API = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+    const request = await fetch(URL_API);
+    const response = await request.json();
+    return response.meals;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getDrinksByCategoryAPI = async (name) => {
+  try {
+    const URL_API = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${name}`;
+    const request = await fetch(URL_API);
+    const response = await request.json();
+    return response.drinks;
+  } catch (error) {
+    return error;
+  }
+};
