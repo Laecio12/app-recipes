@@ -5,6 +5,7 @@ import FoodCards from '../../components/FoodCards';
 // import { Container } from './styles';
 import Header from '../../components/Header/index';
 import Footer from '../../components/Footer/index';
+import { FoodPageContainer } from './styles';
 
 const Food = () => {
   const [categories, setCategories] = useState([]);
@@ -29,7 +30,7 @@ const Food = () => {
   }, []);
 
   return (
-    <>
+    <FoodPageContainer>
       <Header value="Foods" />
       <section>
         { categories && categories.map(({ strCategory }, index) => {
@@ -62,7 +63,7 @@ const Food = () => {
         })}
       </section>
       <Footer />
-    </>
+    </FoodPageContainer>
   );
 };
 
