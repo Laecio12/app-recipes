@@ -4,10 +4,103 @@ import { useHistory } from 'react-router-dom';
 import { Container, Menu, Button, Search } from './styles';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
+import { useFoods } from '../../hooks/useFoods';
+import { useDrinks } from '../../hooks/useDrinks';
+import { getFetch } from '../../services/api';
 
 const Header = ({ value }) => {
+  const { setFoods } = useFoods();
+  const { setDrinks } = useDrinks();
   const [searchBar, setSearchBar] = useState(false);
+  const [inputSearch, setInputSearch] = useState('');
+  const [radioFilter, setRadioFilter] = useState('');
   const history = useHistory();
+  let result = [];
+
+  const checkOneResult = (obj) => {
+    if (obj.length === 1 && value === 'Foods') {
+      const { idMeal } = obj[0];
+      history.push(`/foods/${idMeal}`);
+    } else if (obj.length === 1 && value === 'Drinks') {
+      const { idDrink } = obj[0];
+      history.push(`/drinks/${idDrink}`);
+    }
+  };
+
+  const getByFoodName = async () => {
+    try {
+      result = await getFetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputSearch}`);
+      if (result.meals.length) {
+        setFoods(result.meals);
+      }
+    } catch (error) {
+      return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+    checkOneResult(result.meals);
+  };
+
+  const getByDrinkName = async () => {
+    try {
+      result = await getFetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputSearch}`);
+      if (result.drinks.length) {
+        setDrinks(result.drinks);
+      }
+    } catch (error) {
+      return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+    checkOneResult(result.drinks);
+  };
+
+  const searchType = (target) => {
+    setRadioFilter(target.id);
+  };
+
+  const FilterByRadio = async () => {
+    if (value === 'Foods') {
+      switch (radioFilter) {
+      case 'Ingredients':
+        result = await getFetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputSearch}`);
+        setFoods(result.meals);
+        checkOneResult(result.meals);
+        break;
+      case 'Name':
+        getByFoodName();
+        break;
+      case 'Firstletter':
+        if (inputSearch.length > 1) {
+          return global.alert('Your search must have only 1 (one) character');
+        }
+        result = await getFetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${inputSearch}`);
+        setFoods(result.meals);
+        checkOneResult(result.meals);
+        break;
+      default:
+        break;
+      }
+    } if (value === 'Drinks') {
+      switch (radioFilter) {
+      case 'Ingredients':
+        result = await getFetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputSearch}`);
+        setDrinks(result.drinks);
+        checkOneResult(result.drinks);
+        break;
+      case 'Name':
+        getByDrinkName();
+        break;
+      case 'Firstletter':
+        if (inputSearch.length > 1) {
+          return global.alert('Your search must have only 1 (one) character');
+        }
+        result = await getFetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputSearch}`);
+        setDrinks(result.drinks);
+        checkOneResult(result.drinks);
+        break;
+      default:
+        break;
+      }
+    }
+  };
+
   return (
     <>
       <Container>
@@ -35,7 +128,7 @@ const Header = ({ value }) => {
               <div>
                 <label htmlFor="search">
                   <input
-                    onChange={ ({ target }) => setSearchRecipe(target.value) }
+                    onChange={ ({ target }) => setInputSearch(target.value) }
                     id="search"
                     data-testid="search-input"
                     placeholder="Search Recipe"
@@ -48,7 +141,7 @@ const Header = ({ value }) => {
                   type="radio"
                   data-testid="ingredient-search-radio"
                   name="radio"
-                  onChange={ ({ target }) => (setSearchType(target.id)) }
+                  onChange={ ({ target }) => (searchType(target)) }
                 />
                 Ingredients
               </label>
@@ -58,7 +151,7 @@ const Header = ({ value }) => {
                   type="radio"
                   data-testid="name-search-radio"
                   name="radio"
-                  onChange={ ({ target }) => (setSearchType(target.id)) }
+                  onChange={ ({ target }) => (searchType(target)) }
                 />
                 Name
               </label>
@@ -68,7 +161,7 @@ const Header = ({ value }) => {
                   type="radio"
                   data-testid="first-letter-search-radio"
                   name="radio"
-                  onChange={ ({ target }) => (setSearchType(target.id)) }
+                  onChange={ ({ target }) => (searchType(target)) }
                 />
                 First Letter
               </label>
@@ -77,7 +170,7 @@ const Header = ({ value }) => {
                 type="button"
                 label="button"
                 data-testid="exec-search-btn"
-                onClick={ () => setAPI({ searchType, searchRecipe }) }
+                onClick={ FilterByRadio }
               >
                 Search
               </button>

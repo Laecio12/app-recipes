@@ -5,6 +5,7 @@ import { CardIngredient, ListCards } from './styles';
 import { useFetch, getEndpoint } from '../../services/api';
 import { useFoods } from '../../hooks/useFoods';
 import { useDrinks } from '../../hooks/useDrinks';
+import HeaderWithoutSearch from '../../components/HeaderWithoutSearch';
 
 const ExploreIngredients = ({ match: { url } }) => {
   const [ingredients, setIngredients] = useState([]);
@@ -49,7 +50,8 @@ const ExploreIngredients = ({ match: { url } }) => {
 
   return (
     <>
-      <h1>Ingredients</h1>
+      <HeaderWithoutSearch value="Explore Ingredients" />
+      <h1>Explore Ingredients</h1>
       <ListCards>
         {
           ingredients.map(({ strIngredient, strIngredient1 }, i) => (
