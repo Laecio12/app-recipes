@@ -21,6 +21,8 @@ const RecipesDone = () => {
     }
     setDoneRecipes(data);
     setDoneRecipesData(data);
+    console.log('data', doneRecipesData);
+    console.log('done', doneRecipes);
   }, [history]);
 
   const filterByFood = () => {
