@@ -48,17 +48,19 @@ const Food = () => {
         })}
       </section>
       <p>Food</p>
-      {foods && foods.map((meal, index) => {
-        const CARDS_QTT = 12;
-        if (index >= CARDS_QTT) return null;
-        return (
-          <FoodCards
-            dataTestid={ `${index}-recipe-card` }
-            { ...meal }
-            index={ index }
-            key={ meal.idMeal }
-          />);
-      })}
+      <section>
+        {foods && foods.map((meal, index) => {
+          const CARDS_QTT = 12;
+          if (index >= CARDS_QTT) return null;
+          return (
+            <FoodCards
+              dataTestid={ `${index}-recipe-card` }
+              { ...meal }
+              index={ index }
+              key={ meal.idMeal }
+            />);
+        })}
+      </section>
       <Footer />
     </>
   );
