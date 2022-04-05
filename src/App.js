@@ -15,6 +15,7 @@ import Profile from './pages/Profile';
 import RecipesDone from './pages/RecipesDone';
 import ExploreNationalities from './pages/ExploreNationalities';
 import RecipesFavorites from './pages/RecipesFavorites';
+import './App.css';
 
 function App() {
   return (

@@ -15,7 +15,9 @@ import {
   ShareBtn,
   StartRecipeBtn,
   ShareAndFavorite,
-  ImageRecipe,
+  ImageContent,
+  Ingredients,
+  Instructions,
 } from './styles';
 import copyToClipboard from '../../utils/copyLink';
 import getIngredients from '../../utils/getIngredients';
@@ -86,11 +88,13 @@ const DrinkDetails = ({ match }) => {
   return (
     <Container>
       <Content>
-        <ImageRecipe
-          data-testid="recipe-photo"
-          src={ drink.strDrinkThumb }
-          alt={ drink.strDrink }
-        />
+        <ImageContent>
+          <img
+            data-testid="recipe-photo"
+            src={ drink.strDrinkThumb }
+            alt={ drink.strDrink }
+          />
+        </ImageContent>
         <h1
           data-testid="recipe-title"
         >
@@ -110,18 +114,22 @@ const DrinkDetails = ({ match }) => {
           </FavoriteBtn>
         </ShareAndFavorite>
         <p data-testid="recipe-category">{drink.strAlcoholic}</p>
-        {
-          ingredients.map((ingredient, index) => (
-            <p
-              data-testid={ `${index}-ingredient-name-and-measure` }
-              key={ ingredient.id }
-            >
-              { `${ingredient} - ${drink[`strMeasure${index + 1}`]}` }
-            </p>
-          ))
-        }
-        <p data-testid="instructions">{drink.strInstructions}</p>
-        <h1>Recommendations</h1>
+        <Ingredients>
+
+          {
+            ingredients.map((ingredient, index) => (
+              <p
+                data-testid={ `${index}-ingredient-name-and-measure` }
+                key={ ingredient.id }
+              >
+                { `${ingredient} - ${drink[`strMeasure${index + 1}`]}` }
+              </p>
+            ))
+          }
+        </Ingredients>
+        <Instructions>
+          <p data-testid="instructions">{drink.strInstructions}</p>
+        </Instructions>
         <Cards>
           {
             recommendations.map((food, index) => (

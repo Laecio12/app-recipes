@@ -5,9 +5,9 @@ import { useFetch, getUrlRecipe } from '../../services/api';
 import { Recipe, Button } from './styles';
 import Share from '../../components/Share';
 import Favorite from '../../components/Favorite';
-import { setInProgressRecipes, getInProgressRecipes } from '../../services/localStorage';
+import { setInProgressRecipes, getInProgressRecipes,
+  setDoneRecipe } from '../../services/localStorage';
 import getIngredients from '../../utils/helpers';
-// import useFavorite from '../../hooks/useFavorite';
 
 const RecipesInProgress = ({ match: { url, params: { id } } }) => {
   const [recipe, setRecipe] = useState();
@@ -77,15 +77,17 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
     setInProgressRecipes(ingredientsRecipe, type);
   };
 
-  /* const isChecked = (ing) => {
-    return checks.some((ingredient) => ing === ingredient);
-  }; */
-  /* if (checks.some((ingredient) => ing === ingredient)) {
-      target.parentNode.style.textDecoration = 'line-through';
-      target.setAttribute('checked', '');
-    } else {
-      target.removeAttribute('checked');
-    } */
+  const handleRedirect = (item) => {
+    setDoneRecipe({ id,
+      type,
+      nationality: item.strArea || '',
+      category: item.strCategory || item.strAlcoholic,
+      alcoholicOrNot: item.strAlcoholic || '',
+      name: item.strMeal || item.strDrink,
+      image: item.strMealThumb || item.strDrinkThumb,
+    });
+    history.push('/done-recipes');
+  };
 
   return (
     <Recipe>
@@ -139,21 +141,7 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
                   </div>
                 )
             ))}
-            {/* { ingredients.map((ing, index) => (
-              <div
-                htmlFor="ing"
-                key={ index }
-                data-testid={ `${index}-ingredient-step` }
-              >
-                <input
-                  type="checkbox"
-                  id="ing"
-                  onChange={ ({ target }) => setDecoration(target, ing) }
-                  checked={ isChecked(ing) }
-                />
-                {`${ing} - ${recipe[0][`strMeasure${index + 1}`]}`}
-              </div>
-            ))} */}
+
             <h2>Instruções</h2>
             <p data-testid="instructions">
               { item.strInstructions }
@@ -162,7 +150,7 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
             <Button
               data-testid="finish-recipe-btn"
               disabled={ isDisabled }
-              onClick={ () => history.push('/done-recipes') }
+              onClick={ () => handleRedirect(item) }
             >
               Finalizar
 
