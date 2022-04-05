@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background-color: #EFEFEF;
-  overflow: hidden;
-  height: 70px;
-  margin-top: -15px;
-  bottom: 0px;
+    background-color: #EFEFEF;
+    overflow: hidden;
+    height: 70px;
+    bottom: 0px;
+    padding-top: 10px;
 `;
 
 export const Menu = styled.header`
