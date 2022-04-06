@@ -42,7 +42,6 @@ export function DrinksProvider({ children }) {
   const filterByIngredientDrink = async (ingredient) => {
     const endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
     const data = await getFetch(endpoint);
-    console.log(data);
     setDrinks(data.drinks.map(({ strDrink, strDrinkThumb, idDrink }) => (
       { strDrink, strDrinkThumb, idDrink })));
     history.push('/drinks');
