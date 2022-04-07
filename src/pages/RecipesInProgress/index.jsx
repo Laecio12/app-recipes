@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { useFetch, getUrlRecipe } from '../../services/api';
-import { Recipe, Button } from './styles';
+import { RecipeInProgressComponent, ImageContent, ButtonFinish,
+  ShareAndFavorite, Ingredients, Instructions } from './styles';
 import Share from '../../components/Share';
 import Favorite from '../../components/Favorite';
 import { setInProgressRecipes, getInProgressRecipes,
@@ -90,75 +91,80 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
   };
 
   return (
-    <Recipe>
-      <h1> RecipesInProgress </h1>
+    <RecipeInProgressComponent>
       {
         recipe
         && recipe.map((item, i) => (
           <div key={ i }>
-            <img
-              src={ item.strMealThumb || item.strDrinkThumb }
-              alt="recipe-in-progress"
-              data-testid="recipe-photo"
-            />
+            <ImageContent>
+              <img
+                src={ item.strMealThumb || item.strDrinkThumb }
+                alt="recipe-in-progress"
+                data-testid="recipe-photo"
+              />
+            </ImageContent>
             <h1 data-testid="recipe-title">{ item.strMeal || item.strDrink }</h1>
-            <Share id={ id } type={ type } />
-            <Favorite { ...favorite } />
-            <p data-testid="recipe-category">
+            <ShareAndFavorite>
+              <Share id={ id } type={ type } />
+              <Favorite { ...favorite } />
+            </ShareAndFavorite>
+            <span data-testid="recipe-category">
               { item.strCategory || item.strAlcoholic }
-            </p>
-            <h2>Ingredientes</h2>
-            { ingredients.map((ing, index) => (
-              checks.some((ingredient) => ing === ingredient)
-                ? (
-                  <div
-                    htmlFor="ing"
-                    key={ index }
-                    data-testid={ `${index}-ingredient-step` }
-                    style={ { textDecoration: 'line-through' } }
-                  >
-                    <input
-                      type="checkbox"
-                      id="ing"
-                      onChange={ ({ target }) => setDecoration(target, ing) }
-                      defaultChecked
-                    />
-                    {`${ing} - ${recipe[0][`strMeasure${index + 1}`]}`}
-                  </div>
-                )
-                : (
-                  <div
-                    htmlFor="ing"
-                    key={ index }
-                    data-testid={ `${index}-ingredient-step` }
-                  >
-                    <input
-                      type="checkbox"
-                      id="ing"
-                      onChange={ ({ target }) => setDecoration(target, ing) }
-                    />
-                    {`${ing} - ${recipe[0][`strMeasure${index + 1}`]}`}
-                  </div>
-                )
-            ))}
+            </span>
+            <Ingredients>
+              { ingredients.map((ing, index) => (
+                checks.some((ingredient) => ing === ingredient)
+                  ? (
+                    <div
+                      htmlFor="ing"
+                      key={ index }
+                      data-testid={ `${index}-ingredient-step` }
+                      style={ { textDecoration: 'line-through' } }
+                    >
+                      <input
+                        type="checkbox"
+                        id="ing"
+                        onChange={ ({ target }) => setDecoration(target, ing) }
+                        defaultChecked
+                      />
+                      {`${ing} - ${recipe[0][`strMeasure${index + 1}`]}`}
+                    </div>
+                  )
+                  : (
+                    <div
+                      htmlFor="ing"
+                      key={ index }
+                      data-testid={ `${index}-ingredient-step` }
+                    >
+                      <input
+                        type="checkbox"
+                        id="ing"
+                        onChange={ ({ target }) => setDecoration(target, ing) }
+                      />
+                      {`${ing} - ${recipe[0][`strMeasure${index + 1}`]}`}
+                    </div>
+                  )
+              ))}
+            </Ingredients>
 
-            <h2>Instruções</h2>
-            <p data-testid="instructions">
-              { item.strInstructions }
+            <Instructions>
+              <p data-testid="instructions">
+                { item.strInstructions }
+              </p>
+            </Instructions>
 
-            </p>
-            <Button
+            <ButtonFinish
               data-testid="finish-recipe-btn"
               disabled={ isDisabled }
               onClick={ () => handleRedirect(item) }
             >
               Finalizar
 
-            </Button>
+            </ButtonFinish>
           </div>
         ))
       }
-    </Recipe>
+    </RecipeInProgressComponent>
   );
 };
 

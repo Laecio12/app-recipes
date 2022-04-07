@@ -1,7 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+<<<<<<< HEAD
 import theme from './global/styles/theme';
+=======
+>>>>>>> 2b1cf129e864703567b27397ddc9d4696113cdbb
 import Drink from './pages/Drink/index';
 import DrinkDetails from './pages/DrinkDetails ';
 import FoodDetails from './pages/FoodDetails';
@@ -18,10 +21,15 @@ import RecipesDone from './pages/RecipesDone';
 import ExploreNationalities from './pages/ExploreNationalities';
 import RecipesFavorites from './pages/RecipesFavorites';
 import './App.css';
+import theme from './global/styles/theme';
 
 function App() {
   return (
     <ThemeProvider theme={ theme }>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2b1cf129e864703567b27397ddc9d4696113cdbb
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route

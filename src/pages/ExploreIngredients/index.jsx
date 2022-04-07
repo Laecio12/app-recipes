@@ -51,7 +51,6 @@ const ExploreIngredients = ({ match: { url } }) => {
   return (
     <>
       <HeaderWithoutSearch value="Explore Ingredients" />
-      <h1>Explore Ingredients</h1>
       <ListCards>
         {
           ingredients.map(({ strIngredient, strIngredient1 }, i) => (
@@ -69,9 +68,9 @@ const ExploreIngredients = ({ match: { url } }) => {
                 alt={ strIngredient || strIngredient1 }
                 data-testid={ `${i}-card-img` }
               />
-              <h2 data-testid={ `${i}-card-name` }>
+              <h4 data-testid={ `${i}-card-name` }>
                 { strIngredient || strIngredient1 }
-              </h2>
+              </h4>
             </CardIngredient>
           ))
         }

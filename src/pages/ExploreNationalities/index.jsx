@@ -3,6 +3,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useFetch, getFetch } from '../../services/api';
 import FoodCards from '../../components/FoodCards';
+import { NationalitiesComponent, ListCards } from './styles';
 
 const ExploreNationalities = () => {
   const [area, setArea] = useState([]);
@@ -29,7 +30,6 @@ const ExploreNationalities = () => {
         : `https://www.themealdb.com/api/json/v1/1/filter.php?a=${selected}`;
       const MAX_ARRAY_LENGTH = 12;
       const listCards = await getFetch(url);
-      console.log(listCards);
       setCards(listCards.meals.slice(0, MAX_ARRAY_LENGTH));
     })();
   }, [selected]);
@@ -40,32 +40,37 @@ const ExploreNationalities = () => {
 
   return (
     <>
-      <Header value="Explore Nationalities" />
-      <select data-testid="explore-by-nationality-dropdown" onChange={ getOption }>
-        {
-          area.map((item, i) => (
-            <option
-              key={ i }
-              value={ item }
-              data-testid={ `${item}-option` }
-            >
-              { item }
+      <NationalitiesComponent>
+        <Header value="Explore Nationalities" />
+        <select data-testid="explore-by-nationality-dropdown" onChange={ getOption }>
+          {
+            area.map((item, i) => (
+              <option
+                key={ i }
+                value={ item }
+                data-testid={ `${item}-option` }
+              >
+                { item }
 
-            </option>
+              </option>
+            ))
+          }
+        </select>
+        <ListCards>
+
+          {
+            cards
+          && cards.map((meal, i) => (
+            <FoodCards
+              dataTestid={ `${i}-recipe-card` }
+              { ...meal }
+              index={ i }
+              key={ meal.idMeal }
+            />
           ))
-        }
-      </select>
-      {
-        cards
-        && cards.map((meal, i) => (
-          <FoodCards
-            dataTestid={ `${i}-recipe-card` }
-            { ...meal }
-            index={ i }
-            key={ meal.idMeal }
-          />
-        ))
-      }
+          }
+        </ListCards>
+      </NationalitiesComponent>
       <Footer />
     </>
   );

@@ -7,7 +7,6 @@ import copyToClipboard from '../../utils/copyLink';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 const CardDoneRecipesOrFavorite = (props) => {
-  console.log(props);
   const { image, category, nationality, alcoholicOrNot,
     name, index, doneDate, tags, id, type, deleteRecipe, isFavorite } = props;
 
@@ -53,6 +52,7 @@ const CardDoneRecipesOrFavorite = (props) => {
             <button
               onClick={ () => deleteRecipe(id) }
               type="button"
+              data-testid={ `${index}-deleteRecipe` }
             >
               <img
                 data-testid={ `${index}-horizontal-favorite-btn` }
