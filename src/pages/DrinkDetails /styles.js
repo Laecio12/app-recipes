@@ -96,10 +96,10 @@ export const Ingredients = styled.div`
     width: 100%;
   }
 
-  /* span {
-    flex: 1;
-    border-bottom: 1px dotted #000;
-  } */
+  span {
+    flex-grow: 1;
+    border-bottom: dotted yellow;
+  }
 `;
 
 export const Instructions = styled.div`

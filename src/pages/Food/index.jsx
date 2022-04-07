@@ -49,7 +49,6 @@ const Food = () => {
               </button>);
           })}
         </section>
-        <p>Food</p>
         <section>
           {foods && foods.map((meal, index) => {
             const CARDS_QTT = 12;
