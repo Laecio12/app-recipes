@@ -4,15 +4,16 @@ import renderWithRouter from '../../utils/renderWithRouter';
 import App from '../../App';
 
 describe('teste DoneRecipes', () => {
+  const mealName = 'Spicy Arrabiata Penne';
   beforeEach(() => {
-    const doneRecipes = [
+    const favoritesRecipes = [
       {
         id: '52771',
         type: 'food',
         nationality: 'Italian',
         category: 'Vegetarian',
         alcoholicOrNot: '',
-        name: 'Spicy Arrabiata Penne',
+        name: mealName,
         image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
         doneDate: '23/06/2020',
         tags: ['Pasta', 'Curry'],
@@ -29,14 +30,14 @@ describe('teste DoneRecipes', () => {
         tags: [],
       },
     ];
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoritesRecipes));
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  const rota = '/done-recipes';
+  const rota = '/favorite-recipes';
 
   const allBtn = 'filter-by-all-btn';
   const filterByFood = 'filter-by-food-btn';
@@ -51,7 +52,7 @@ describe('teste DoneRecipes', () => {
 
   it('Todos os data-testids estão presentes', async () => {
     const { history } = renderWithRouter(<App />);
-    history.push('/done-recipes');
+    history.push('favorite-recipes');
 
     expect(await screen.findByTestId(allBtn)).toBeInTheDocument();
     expect(await screen.findByTestId(filterByFood)).toBeInTheDocument();
@@ -80,7 +81,7 @@ describe('teste DoneRecipes', () => {
     history.push(rota);
     fireEvent.click(await screen.findByTestId(filterByDrinks));
 
-    const notExist = screen.queryByText('Spicy Arrabiata Penne');
+    const notExist = screen.queryByText(mealName);
     expect(notExist).toBeNull();
   });
   it('filter all', async () => {
@@ -106,5 +107,15 @@ describe('teste DoneRecipes', () => {
     fireEvent.click(await screen.findByTestId(shareBtn));
 
     expect(global.navigator.clipboard.writeText).toHaveBeenCalledWith('http://localhost:3000/foods/52771');
+  });
+
+  it('teste Delete recipe', async () => {
+    const { history } = renderWithRouter(<App />);
+    history.push(rota);
+    const deleteRecipe = await screen.findByTestId('0-deleteRecipe');
+    fireEvent.click(deleteRecipe);
+
+    const notExist = screen.queryByText(mealName);
+    expect(notExist).toBeNull();
   });
 });

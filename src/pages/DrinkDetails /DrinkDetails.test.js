@@ -12,11 +12,10 @@ describe('teste a página FoodDetails', () => {
   const recipeCategory = 'recipe-category';
   const ingredients = '0-ingredient-name-and-measure';
   const instructions = 'instructions';
-  const video = 'video';
   const recommendationCard = '0-recomendation-card';
   const startRecipeBtn = 'start-recipe-btn';
 
-  const rota = '/foods/52771';
+  const rota = '/drinks/178319';
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockImplementation(mockFetch);
   });
@@ -27,7 +26,7 @@ describe('teste a página FoodDetails', () => {
 
   it(' A tela de comida possui todos os atributos data-testid', async () => {
     const { history } = renderWithRouter(<App />);
-    history.push('/foods/52771');
+    history.push(rota);
 
     expect(await screen.findByTestId(recipePhoto)).toBeInTheDocument();
     expect(await screen.findByTestId(recipeTitle)).toBeInTheDocument();
@@ -36,7 +35,6 @@ describe('teste a página FoodDetails', () => {
     expect(await screen.findByTestId(recipeCategory)).toBeInTheDocument();
     expect(await screen.findByTestId(ingredients)).toBeInTheDocument();
     expect(await screen.findByTestId(instructions)).toBeInTheDocument();
-    expect(await screen.findByTestId(video)).toBeInTheDocument();
     expect(await screen.findByTestId(recommendationCard)).toBeInTheDocument();
     expect(await screen.findByTestId(startRecipeBtn)).toBeInTheDocument();
   });
@@ -46,7 +44,7 @@ describe('teste a página FoodDetails', () => {
     history.push(rota);
     expect(await screen.findByTestId(recipePhoto)).toBeInTheDocument();
 
-    expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/lookup.php?i=52771');
+    expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=178319');
   });
 
   it('"Start Recipe" seja clicado, a rota deve mudar para receita em progresso',
@@ -56,7 +54,7 @@ describe('teste a página FoodDetails', () => {
 
       fireEvent.click(await screen.findByTestId(startRecipeBtn));
 
-      expect(history.location.pathname).toBe('/foods/52771/in-progress');
+      expect(history.location.pathname).toBe('/drinks/178319/in-progress');
     });
 
   it('verifica se ao clicar no botão de compartilhar, o a url e copiada', () => {
@@ -71,7 +69,7 @@ describe('teste a página FoodDetails', () => {
     history.push(rota);
     fireEvent.click(screen.getByTestId(shareBtn));
 
-    expect(global.navigator.clipboard.writeText).toHaveBeenCalledWith('http://localhost:3000/foods/52771');
+    expect(global.navigator.clipboard.writeText).toHaveBeenCalledWith('http://localhost:3000/drinks/178319');
   });
 
   it('verifica se ao clicar no botão de favoritar, fica preenchido', async () => {

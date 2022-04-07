@@ -30,7 +30,6 @@ const ExploreNationalities = () => {
         : `https://www.themealdb.com/api/json/v1/1/filter.php?a=${selected}`;
       const MAX_ARRAY_LENGTH = 12;
       const listCards = await getFetch(url);
-      console.log(listCards);
       setCards(listCards.meals.slice(0, MAX_ARRAY_LENGTH));
     })();
   }, [selected]);
