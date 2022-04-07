@@ -28,7 +28,6 @@ const RecipesFavorites = () => {
     setDoneRecipes(newData);
     deleteFavoriteRecipe(id);
   };
-
   return (
     <Container>
       <HeaderWithoutSearch value="Favorite Recipes" />
