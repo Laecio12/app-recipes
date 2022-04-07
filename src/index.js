@@ -6,7 +6,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { FoodsProvider } from './hooks/useFoods';
 import { DrinksProvider } from './hooks/useDrinks';
-import theme from './global/styles/theme';
 
 ReactDOM.render(
   <BrowserRouter>
