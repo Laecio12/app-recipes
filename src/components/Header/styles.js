@@ -11,14 +11,15 @@ export const Container = styled.div`
 export const Menu = styled.header`
   display: flex;
   justify-content: space-between;
+  font-family:  Roboto-Bold;
 `;
 
 export const Button = styled.button`
-  background-color: #333333;
   border-style: none;
   margin: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 400px; 
+  box-shadow: 0px 0px 10px rgb(0 0 0 / 10%);
+  border-radius: 12px;
+  background-color: rgba(51,51,51,0.2);
 `;
 
 export const Search = styled.button`
@@ -28,4 +29,5 @@ export const Search = styled.button`
   width: 100%;
   bottom: 0px;
   border-style:none;
+  font-family:  Roboto-Regular;
 `;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const BottonMenu = styled.footer`
-background-color: pink;
+background-color: ${({ theme }) => theme.colors.darkGray50};
 display: flex;
 justify-content: space-between;
 position:fixed;

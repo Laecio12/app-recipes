@@ -11,13 +11,9 @@ ReactDOM.render(
   <BrowserRouter>
     <FoodsProvider>
       <DrinksProvider>
-<<<<<<< HEAD
-        <App />
-=======
 
         <App />
 
->>>>>>> 2b1cf129e864703567b27397ddc9d4696113cdbb
       </DrinksProvider>
     </FoodsProvider>
   </BrowserRouter>,

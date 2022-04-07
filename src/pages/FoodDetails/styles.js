@@ -100,7 +100,8 @@ export const Ingredients = styled.div`
 
   span:nth-of-type(2) {
     flex-grow: 1;
-    border-bottom: dotted yellow;
+    border-bottom: dotted;
+    border-color: ${({ theme }) => theme.colors.darkGray}
   }
 `;
 

@@ -96,9 +96,10 @@ export const Ingredients = styled.div`
     width: 100%;
   }
 
-  span {
+    span:nth-of-type(2) {
     flex-grow: 1;
-    border-bottom: dotted yellow;
+    border-bottom: dotted;
+    border-color: ${({ theme }) => theme.colors.darkGray}
   }
 `;
 

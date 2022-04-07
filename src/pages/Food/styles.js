@@ -21,9 +21,11 @@ export const FoodPageContainer = styled.main`
     padding: 2px;
     width: 70px;
     margin: 3px 0;
-    background: #333333;
+    background-color: ${({ theme }) => theme.colors.darkGray50};
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 15px; 
+    border-style: hidden;
+    padding: 5px;
     }
 
     section:nth-of-type(2) {
@@ -31,6 +33,7 @@ export const FoodPageContainer = styled.main`
     flex-wrap: wrap;
     width: 299px;
     justify-content: space-around;
+    margin-bottom: 25px;
     }
 
     section a {
