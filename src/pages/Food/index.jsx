@@ -46,6 +46,7 @@ const Food = () => {
                 onClick={ () => filterByCategory(strCategory) }
               >
                 {strCategory}
+
               </button>);
           })}
         </section>

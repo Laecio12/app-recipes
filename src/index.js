@@ -13,9 +13,9 @@ ReactDOM.render(
   <BrowserRouter>
     <FoodsProvider>
       <DrinksProvider>
-        <ThemeProvider theme={ theme }>
-          <App />
-        </ThemeProvider>
+
+        <App />
+
       </DrinksProvider>
     </FoodsProvider>
   </BrowserRouter>,
