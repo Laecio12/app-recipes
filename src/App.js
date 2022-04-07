@@ -18,7 +18,6 @@ import ExploreNationalities from './pages/ExploreNationalities';
 import RecipesFavorites from './pages/RecipesFavorites';
 import './App.css';
 
-
 function App() {
   return (
     <ThemeProvider theme={ theme }>
