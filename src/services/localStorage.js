@@ -24,8 +24,6 @@ export const getInProgressRecipes = () => {
 };
 
 export const setInProgressRecipes = (recipe, type) => {
-  // recipe === { id: [lista]}
-  // Criando a chave se ainda não houver.
   const saveIngredients = JSON.parse(localStorage.getItem('inProgressRecipes'));
   if (type === 'meals') {
     const newList = { ...saveIngredients,
@@ -48,7 +46,12 @@ export const getStorageData = (id) => {
 
   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
   let inProgress = false;
-  if (inProgressRecipes) { inProgress = true; }
+  if (inProgressRecipes
+    && inProgressRecipes.meals && inProgressRecipes.meals[id]) inProgress = true;
+  else if (inProgressRecipes
+    && inProgressRecipes.cocktails && inProgressRecipes.cocktails[id]) {
+    inProgress = true;
+  }
 
   return { favoriteIcon, doneRecipe, inProgress };
 };

@@ -15,16 +15,23 @@ export const Container = styled.div`
     height: 200px;
     border-radius: 50%;
   }
+  a {
+    text-decoration: none;
+    color: black;
+  }
 `;
 
 export const ShareAndFavorite = styled.div`
   display: flex;
+  
   justify-content: space-around;
   flex-direction: row;
+  width: 50%;
 
   button {
     border: none;
     background: none;
+    margin-top: 10px;
   }
   img {
     width: 20px;
