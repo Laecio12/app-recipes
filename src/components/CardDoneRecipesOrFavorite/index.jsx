@@ -52,6 +52,7 @@ const CardDoneRecipesOrFavorite = (props) => {
             <button
               onClick={ () => deleteRecipe(id) }
               type="button"
+              data-testid={ `${index}-deleteRecipe` }
             >
               <img
                 data-testid={ `${index}-horizontal-favorite-btn` }

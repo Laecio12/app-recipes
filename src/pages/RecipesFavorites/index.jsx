@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import HeaderWithoutSearch from '../../components/HeaderWithoutSearch';
 import CardDoneRecipesOrFavorite from '../../components/CardDoneRecipesOrFavorite';
 import { deleteFavoriteRecipe } from '../../services/localStorage';
@@ -8,20 +7,12 @@ import { Container, FilterButtons, Cards } from './styles';
 const RecipesFavorites = () => {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [doneRecipesData, setDoneRecipesData] = useState([]);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const history = useHistory();
-
   useEffect(() => {
-    let data = [];
-    if (history.location.pathname === '/favorite-recipes') {
-      data = JSON.parse(localStorage.getItem('favoriteRecipes'));
-      setIsFavorite(true);
-    } else {
-      data = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    }
+    const data = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
     setDoneRecipes(data);
     setDoneRecipesData(data);
-  }, [history]);
+  }, []);
 
   const filterByFood = () => {
     const filteredFoods = doneRecipesData.filter(({ type }) => type === 'food');
@@ -72,7 +63,7 @@ const RecipesFavorites = () => {
           doneRecipes && doneRecipes.map((recipe, index) => (
             <CardDoneRecipesOrFavorite
               deleteRecipe={ deleteRecipe }
-              isFavorite={ isFavorite }
+              isFavorite
               { ...recipe }
               key={ index }
               index={ index }
