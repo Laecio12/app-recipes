@@ -5,7 +5,7 @@ import { getMealsAPI, getFoodsByCategoryAPI, getFetch } from '../services/api';
 
 // import { apiFoods } from '../services/api';
 
-const FoodsContext = createContext({});
+export const FoodsContext = createContext({});
 
 export function FoodsProvider({ children }) {
   const [foods, setFoods] = useState([]);
