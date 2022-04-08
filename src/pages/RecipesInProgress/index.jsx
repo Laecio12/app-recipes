@@ -35,8 +35,6 @@ const RecipesInProgress = ({ match: { url, params: { id } } }) => {
     }
   }, [data, url]);
 
-  // const { favorite2 } = useFavorite(data);
-
   useEffect(() => {
     if (type) {
       const ingredientsChecks = getInProgressRecipes()[type][id];

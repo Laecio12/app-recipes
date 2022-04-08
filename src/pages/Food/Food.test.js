@@ -5,7 +5,7 @@ import App from '../../App';
 import mockFetch from '../../mocks/mockFetch';
 
 describe('Teste page food', () => {
-  const rota = '/drinks';
+  const rota = '/foods';
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockImplementation(mockFetch);
   });
@@ -15,7 +15,7 @@ describe('Teste page food', () => {
   });
   const card = '0-recipe-card';
   const numberOfCards = 11;
-  it('Carregue as 12 primeiras receitas de bebidas, uma em cada card',
+  it('Carregue as 12 primeiras receitas de comidas, uma em cada card',
     async () => {
       const { history } = renderWithRouter(<App />);
       history.push(rota);
@@ -30,6 +30,6 @@ describe('Teste page food', () => {
       const { history } = renderWithRouter(<App />);
       history.push(rota);
       fireEvent.click(await screen.findByTestId('0-recipe-card'));
-      expect(history.location.pathname).toBe('/drinks/15997');
+      expect(history.location.pathname).toBe('/foods/52977');
     });
 });

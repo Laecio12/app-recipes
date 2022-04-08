@@ -17,7 +17,7 @@ FoodCards.propTypes = {
   strMeal: propTypes.string.isRequired,
   strMealThumb: propTypes.string.isRequired,
   dataTestid: propTypes.string.isRequired,
-  idMeal: propTypes.number.isRequired,
+  idMeal: propTypes.string.isRequired,
 };
 
 export default FoodCards;

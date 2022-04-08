@@ -4,18 +4,10 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { FoodsProvider } from './hooks/useFoods';
-import { DrinksProvider } from './hooks/useDrinks';
 
 ReactDOM.render(
   <BrowserRouter>
-    <FoodsProvider>
-      <DrinksProvider>
-
-        <App />
-
-      </DrinksProvider>
-    </FoodsProvider>
+    <App />
   </BrowserRouter>,
   document.getElementById('root'),
 );
