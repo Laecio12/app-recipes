@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useFoods } from '../../hooks/useFoods';
+import React, { useState, useEffect, useContext } from 'react';
+import { FoodsContext, useFoods } from '../../hooks/useFoods';
 import FoodCards from '../../components/FoodCards';
 // import { apiFood } from '../../services/api';
 // import { Container } from './styles';
@@ -8,7 +8,8 @@ import Footer from '../../components/Footer/index';
 
 const Food = () => {
   const [categories, setCategories] = useState([]);
-  const { getMealInfos, foods, filterByCategory } = useFoods();
+  const { foods, filterByCategory } = useFoods();
+  const { getMealInfos } = useContext(FoodsContext);
 
   useEffect(() => {
     getMealInfos();
