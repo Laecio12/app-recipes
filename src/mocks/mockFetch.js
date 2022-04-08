@@ -11,7 +11,12 @@ const filterByBreakfast = require('../../cypress/mocks/breakfastMeals');
 const filterByDesert = require('../../cypress/mocks/dessertMeals');
 const filterByGoat = require('../../cypress/mocks/goatMeals');
 const filterBySoup = require('../../cypress/mocks/soupMeals');
-
+const filterByIngredient = require('../../cypress/mocks/mealsByIngredient');
+const filterByOrdinaryDrink = require('../../cypress/mocks/ordinaryDrinks');
+const filterByCocktail = require('../../cypress/mocks/cocktailDrinks');
+const filterByShakes = require('../../cypress/mocks/milkDrinks');
+const filterByOther = require('../../cypress/mocks/otherDrinks');
+const filterByCocoa = require('../../cypress/mocks/cocoaDrinks');
 /* eslint-disable */
 const mockFetch = (url) => {
   console.log(url);
@@ -86,9 +91,39 @@ const mockFetch = (url) => {
       json: () => Promise.resolve(filterBySoup),
     });
   }
-  if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a') {
+  if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?f=a') {
     return Promise.resolve({
       json: () => Promise.resolve(foods),
+    });
+  }
+  if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken') {
+    return Promise.resolve({
+      json: () => Promise.resolve(filterByIngredient),
+    });
+  }
+  if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary Drink') {
+    return Promise.resolve({
+      json: () => Promise.resolve(filterByOrdinaryDrink),
+    });
+  }
+  if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail') {
+    return Promise.resolve({
+      json: () => Promise.resolve(filterByCocktail),
+    });
+  }
+  if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Milk / Float / Shake') {
+    return Promise.resolve({
+      json: () => Promise.resolve(filterByShakes),
+    });
+  }
+  if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Other/Unknown') {
+    return Promise.resolve({
+      json: () => Promise.resolve(filterByOther),
+    });
+  }
+  if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocoa') {
+    return Promise.resolve({
+      json: () => Promise.resolve(filterByCocoa),
     });
   }
 
