@@ -7,6 +7,7 @@ export const FoodPageContainer = styled.main`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: ${({ theme }) => theme.colors.backgroundLightGray};
 
     section:nth-of-type(1) {
     display: flex;
@@ -15,6 +16,8 @@ export const FoodPageContainer = styled.main`
     flex-wrap: wrap;
     flex-direction: row;
     margin-top: 10px;
+    border-bottom: 1px solid rgba(var(--b38,219,219,219),1);
+    padding-bottom: 10px;
     }
 
     button {
@@ -33,7 +36,7 @@ export const FoodPageContainer = styled.main`
     flex-wrap: wrap;
     width: 299px;
     justify-content: space-around;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     }
 
     section a {
