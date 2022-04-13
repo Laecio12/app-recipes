@@ -94,12 +94,15 @@ export const Ingredients = styled.div`
   p {
     display: flex;
     width: 100%;
+    align-items: baseline;
+    gap: 7px;
   }
 
-  /* span {
-    flex: 1;
-    border-bottom: 1px dotted #000;
-  } */
+  span:nth-of-type(2) {
+    flex-grow: 1;
+    border-bottom: dotted;
+    border-color: ${({ theme }) => theme.colors.darkGray}
+  }
 `;
 
 export const Instructions = styled.div`

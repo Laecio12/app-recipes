@@ -1,5 +1,21 @@
+/* @font-face {
+  font-family: roboto;
+  src: URL('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap')
+} */
+
+@font-face {
+  font-family: Roboto-Bold;
+  src: url('../public/fonts/Roboto/Roboto-Bold.ttf');
+}
+
+@font-face {
+  font-family: Roboto-Regular;
+  src: url('../public/fonts/Roboto/Roboto-Regular.ttf');
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+

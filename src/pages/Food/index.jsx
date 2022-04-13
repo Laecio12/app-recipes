@@ -5,6 +5,7 @@ import FoodCards from '../../components/FoodCards';
 // import { Container } from './styles';
 import Header from '../../components/Header/index';
 import Footer from '../../components/Footer/index';
+import { FoodPageContainer } from './styles';
 
 const Food = () => {
   const [categories, setCategories] = useState([]);
@@ -31,34 +32,38 @@ const Food = () => {
   return (
     <>
       <Header value="Foods" />
-      <section>
-        { categories && categories.map(({ strCategory }, index) => {
-          const CARDS_QTT = 5;
-          if (index === CARDS_QTT) { strCategory = 'All'; }
-          if (index > CARDS_QTT) return null;
-          return (
-            <button
-              type="button"
-              key={ index }
-              data-testid={ `${strCategory}-category-filter` }
-              onClick={ () => filterByCategory(strCategory) }
-            >
-              {strCategory}
-            </button>);
-        })}
-      </section>
-      <p>Food</p>
-      {foods && foods.map((meal, index) => {
-        const CARDS_QTT = 12;
-        if (index >= CARDS_QTT) return null;
-        return (
-          <FoodCards
-            dataTestid={ `${index}-recipe-card` }
-            { ...meal }
-            index={ index }
-            key={ meal.idMeal }
-          />);
-      })}
+      <FoodPageContainer>
+        <section>
+          { categories && categories.map(({ strCategory }, index) => {
+            const CARDS_QTT = 5;
+            if (index === CARDS_QTT) { strCategory = 'All'; }
+            if (index > CARDS_QTT) return null;
+            return (
+              <button
+                type="button"
+                key={ index }
+                data-testid={ `${strCategory}-category-filter` }
+                onClick={ () => filterByCategory(strCategory) }
+              >
+                {strCategory}
+
+              </button>);
+          })}
+        </section>
+        <section>
+          {foods && foods.map((meal, index) => {
+            const CARDS_QTT = 12;
+            if (index >= CARDS_QTT) return null;
+            return (
+              <FoodCards
+                dataTestid={ `${index}-recipe-card` }
+                { ...meal }
+                index={ index }
+                key={ meal.idMeal }
+              />);
+          })}
+        </section>
+      </FoodPageContainer>
       <Footer />
     </>
   );
